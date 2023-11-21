@@ -45,15 +45,15 @@
                 </ul>
             </li>
         @endcanany
-        @can('api-user.view')
-            <li class="nav-item">
-                <a href="{{ route('api-userIndex') }}" class="nav-link {{ Request::is('api-users*') ? "active":'' }}">
-                    <i class="fas fa-cog"></i>
-                    <sub><i class="fas fa-child"></i></sub>
-                    <p> API Users</p>
-                </a>
-            </li>
-        @endcan
+{{--        @can('api-user.view')--}}
+{{--            <li class="nav-item">--}}
+{{--                <a href="{{ route('api-userIndex') }}" class="nav-link {{ Request::is('api-users*') ? "active":'' }}">--}}
+{{--                    <i class="fas fa-cog"></i>--}}
+{{--                    <sub><i class="fas fa-child"></i></sub>--}}
+{{--                    <p> API Users</p>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
 
     </ul>
 
