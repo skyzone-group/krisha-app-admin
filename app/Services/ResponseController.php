@@ -12,8 +12,8 @@ class ResponseController
         return [
             'success' => true,
             'error_code' => -1,
-            "data" => $message,
-            'result' => $data
+            "message" => $message,
+            'data' => $data
         ];
     }
 
