@@ -22,7 +22,7 @@ class LogWriter
         if (accessToken())
         {
             $user = logObj([
-                'username' => apiAuth()->name,
+                'fullname' => apiAuth()->fullname,
                 'token' => accessToken()->token
             ]);
             $name = apiAuth()->name;

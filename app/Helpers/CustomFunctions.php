@@ -4,7 +4,7 @@
 if (!function_exists('apiAuth')) {
     function apiAuth()
     {
-        $apiAuth = request()->apiAuth ?? \App\Models\ApiUser::whereId(accessToken()->api_user_id)->first();
+        $apiAuth = request()->apiAuth ?? \App\Models\Client::whereId(accessToken()->client_id)->first();
         request()->apiAuth = $apiAuth;
         return $apiAuth;
     }
@@ -212,4 +212,20 @@ if (!function_exists('logObj'))
         return json_encode($object);
     }
 }
+
+if(!function_exists('phone_formatting'))
+{
+    function phone_formatting($str)
+    {
+        $phone = "";
+        for ($i = 0; $i < strlen($str); $i++)
+        {
+            if('0' <= $str[$i] && $str[$i] <= '9')
+                $phone = $phone.$str[$i];
+        }
+        return $phone;
+    }
+}
+
+
 

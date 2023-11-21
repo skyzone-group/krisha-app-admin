@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Blade\ApiUserController;
-
+use App\Http\Controllers\Mobile\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,13 +12,15 @@ use App\Http\Controllers\Blade\ApiUserController;
 */
 
 
-# Api Clients
-Route::post('/login',[ApiAuthController::class,'login']);
+# Public Routes
+Route::post('/mobile/v1/user/sign/check-phone',[LoginController::class,'login']);
+Route::post('/mobile/v1/user/sign/confirm',[LoginController::class,'confirm']);
+
 
 Route::group(['middleware' => 'api-auth'],function (){
-    Route::post('/me',[ApiAuthController::class,'me']);
-    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
-    Route::post('/logout',[ApiAuthController::class,'logout']);
+    Route::post('/mobile/v1/user/check',[ApiAuthController::class,'me']);
+//    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
+//    Route::post('/logout',[ApiAuthController::class,'logout']);
 });
 
 Route::group(['middleware' => 'ajax.check'],function (){

@@ -15,11 +15,18 @@ class CreateTokensTable extends Migration
     {
         Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->integer('api_user_id');
+            $table->integer('client_id');
             $table->string('token')->unique();
+            $table->string('fcm_token')->nullable();
             $table->timestamp('token_expires_at');
             $table->tinyInteger('is_active')->default(1);
-            $table->softDeletes();
+            $table->string('app_lang')->nullable();
+            $table->string('os_type')->nullable();
+            $table->string('os_version')->nullable();
+            $table->string('app_version')->nullable();
+            $table->string('device')->nullable();
+            $table->string('ip')->nullable();
+            $table->timestamp('last_seen_at')->useCurrent();
             $table->timestamps();
         });
     }
