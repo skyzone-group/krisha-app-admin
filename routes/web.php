@@ -6,7 +6,7 @@ use App\Http\Controllers\Blade\RoleController;
 use App\Http\Controllers\Blade\PermissionController;
 use App\Http\Controllers\Blade\HomeController;
 use App\Http\Controllers\Blade\ApiUserController;
-
+use App\Http\Controllers\Blade\RegionController;
 /*
 |--------------------------------------------------------------------------
 | Blade (front-end) Routes
@@ -66,6 +66,15 @@ Route::group(['middleware' => 'auth'],function (){
     Route::post('/api-user/update/{id}',[ApiUserController::class,'update'])->name('api-userUpdate');
     Route::delete('/api-user/delete/{id}',[ApiUserController::class,'destroy'])->name('api-userDestroy');
     Route::delete('/api-user-token/delete/{id}',[ApiUserController::class,'destroyToken'])->name('api-tokenDestroy');
+
+
+    //Regions
+    Route::get('/admin/regions',[RegionController::class,'index'])->name('regionIndex');
+    Route::get('/admin/region/add',[RegionController::class,'add'])->name('regionAdd');
+    Route::post('/admin/region/create',[RegionController::class,'create'])->name('regionCreate');
+    Route::get('/admin/region/{region_id}/edit',[RegionController::class,'edit'])->name('regionEdit');
+    Route::post('/admin/region/update/{region_id}',[RegionController::class,'update'])->name('regionUpdate');
+    Route::delete('/admin/region/delete/{id}',[RegionController::class,'destroy'])->name('regionDestroy');
 });
 
 // Change language session condition

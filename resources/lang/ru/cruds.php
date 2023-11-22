@@ -70,4 +70,12 @@ return [
             'deleted_at_helper'        => ' ',
         ],
     ],
+    'region'           => [
+        'title'          => 'Регионы',
+        'title_singular' => 'Регионы',
+        'fields'         => [
+            'id'            => 'ID',
+            'name'          => 'Название',
+        ],
+    ],
 ];

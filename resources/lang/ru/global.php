@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'places'                                => 'Places',
     'theme'                                 => 'Тема',
     'days'                                  => 'Дней',
     'refund_id'                             => 'Возврат ID',

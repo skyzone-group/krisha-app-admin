@@ -56,7 +56,25 @@
 {{--        @endcan--}}
 
     </ul>
-
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item has-treeview ">
+            <a href="" class="nav-link {{ Request::is('*region*') ? "active":'' }}">
+                <i class="fas fa-map-marker"></i>
+                <p>
+                    @lang('global.places')
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview pl-3" style="display: {{ Request::is('*region*') ? "block":'none' }}">
+                <li class="nav-item">
+                    <a href="{{ route('regionIndex') }}" class="nav-link {{ Request::is('*region*') ? "active":'' }}">
+                        <i class="fas fa-angle-right"></i>
+                        <p> @lang('cruds.region.title')</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">
