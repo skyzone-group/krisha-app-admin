@@ -78,4 +78,14 @@ return [
             'name'          => 'Название',
         ],
     ],
+    'district'           => [
+        'title'          => 'Районы',
+        'title_singular' => 'Районы',
+        'fields'         => [
+            'id'                => 'ID',
+            'name'              => 'Название',
+            'region_name_ru'    => 'Название региона',
+            'district_name_ru'  => 'Название района',
+        ],
+    ],
 ];

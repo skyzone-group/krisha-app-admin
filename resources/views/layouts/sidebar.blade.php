@@ -58,18 +58,24 @@
     </ul>
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview ">
-            <a href="" class="nav-link {{ Request::is('*region*') ? "active":'' }}">
+            <a href="" class="nav-link {{ (Request::is('*region*') || Request::is('*district*')) ? "active":'' }}">
                 <i class="fas fa-map-marker"></i>
                 <p>
                     @lang('global.places')
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
-            <ul class="nav nav-treeview pl-3" style="display: {{ Request::is('*region*') ? "block":'none' }}">
+            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*region*') || Request::is('*district*')) ? "block":'none' }}">
                 <li class="nav-item">
                     <a href="{{ route('regionIndex') }}" class="nav-link {{ Request::is('*region*') ? "active":'' }}">
                         <i class="fas fa-angle-right"></i>
                         <p> @lang('cruds.region.title')</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('districtIndex') }}" class="nav-link {{ Request::is('*district*') ? "active":'' }}">
+                        <i class="fas fa-angle-right"></i>
+                        <p> @lang('cruds.district.title')</p>
                     </a>
                 </li>
             </ul>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Blade\PermissionController;
 use App\Http\Controllers\Blade\HomeController;
 use App\Http\Controllers\Blade\ApiUserController;
 use App\Http\Controllers\Blade\RegionController;
+use App\Http\Controllers\Blade\DistrictController;
 /*
 |--------------------------------------------------------------------------
 | Blade (front-end) Routes
@@ -75,6 +76,14 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/admin/region/{region_id}/edit',[RegionController::class,'edit'])->name('regionEdit');
     Route::post('/admin/region/update/{region_id}',[RegionController::class,'update'])->name('regionUpdate');
     Route::delete('/admin/region/delete/{id}',[RegionController::class,'destroy'])->name('regionDestroy');
+
+    //Regions
+    Route::get('/admin/districts',[DistrictController::class,'index'])->name('districtIndex');
+    Route::get('/admin/district/add',[DistrictController::class,'add'])->name('districtAdd');
+    Route::post('/admin/district/create',[DistrictController::class,'create'])->name('districtCreate');
+    Route::get('/admin/district/{district_id}/edit',[DistrictController::class,'edit'])->name('districtEdit');
+    Route::post('/admin/district/update/{district_id}',[DistrictController::class,'update'])->name('districtUpdate');
+    Route::delete('/admin/district/delete/{id}',[DistrictController::class,'destroy'])->name('districtDestroy');
 });
 
 // Change language session condition
