@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Blade;
 
 use App\Http\Controllers\Controller;
+use App\Models\District;
+use App\Models\Quarter;
 use App\Models\Region;
 use Illuminate\Http\Request;
 
@@ -54,6 +56,11 @@ class RegionController extends Controller
         abort_if_forbidden('item.delete');
         $item = Region::where('id','=', $id)->get()->first();
         $item->delete();
+
+        $districtIds = District::where('region_id', $id)->pluck('id')->all();
+        District::where('region_id', $id)->delete();
+        if(!is_null($districtIds)) Quarter::whereIn('district_id', $districtIds)->delete();
+
         return redirect()->back();
     }
 }

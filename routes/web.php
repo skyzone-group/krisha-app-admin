@@ -8,6 +8,7 @@ use App\Http\Controllers\Blade\HomeController;
 use App\Http\Controllers\Blade\ApiUserController;
 use App\Http\Controllers\Blade\RegionController;
 use App\Http\Controllers\Blade\DistrictController;
+use App\Http\Controllers\Blade\QuarterController;
 /*
 |--------------------------------------------------------------------------
 | Blade (front-end) Routes
@@ -77,13 +78,21 @@ Route::group(['middleware' => 'auth'],function (){
     Route::post('/admin/region/update/{region_id}',[RegionController::class,'update'])->name('regionUpdate');
     Route::delete('/admin/region/delete/{id}',[RegionController::class,'destroy'])->name('regionDestroy');
 
-    //Regions
+    //District
     Route::get('/admin/districts',[DistrictController::class,'index'])->name('districtIndex');
     Route::get('/admin/district/add',[DistrictController::class,'add'])->name('districtAdd');
     Route::post('/admin/district/create',[DistrictController::class,'create'])->name('districtCreate');
     Route::get('/admin/district/{district_id}/edit',[DistrictController::class,'edit'])->name('districtEdit');
     Route::post('/admin/district/update/{district_id}',[DistrictController::class,'update'])->name('districtUpdate');
     Route::delete('/admin/district/delete/{id}',[DistrictController::class,'destroy'])->name('districtDestroy');
+
+    //Quarter
+    Route::get('/admin/quarters',[QuarterController::class,'index'])->name('quarterIndex');
+    Route::get('/admin/quarter/add',[QuarterController::class,'add'])->name('quarterAdd');
+    Route::post('/admin/quarter/create',[QuarterController::class,'create'])->name('quarterCreate');
+    Route::get('/admin/quarter/{quarter_id}/edit',[QuarterController::class,'edit'])->name('quarterEdit');
+    Route::post('/admin/quarter/update/{quarter_id}',[QuarterController::class,'update'])->name('quarterUpdate');
+    Route::delete('/admin/quarter/delete/{id}',[QuarterController::class,'destroy'])->name('quarterDestroy');
 });
 
 // Change language session condition

@@ -88,4 +88,14 @@ return [
             'district_name_ru'  => 'Название района',
         ],
     ],
+    'quarter'           => [
+        'title'          => 'Кварталы',
+        'title_singular' => 'Кварталы',
+        'fields'         => [
+            'id'                => 'ID',
+            'name'              => 'Название',
+            'district_name_ru'  => 'Название района',
+            'quarter_name_ru'   => 'Название квартал',
+        ],
+    ],
 ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Blade;
 
 use App\Http\Controllers\Controller;
 use App\Models\District;
+use App\Models\Quarter;
 use App\Models\Region;
 use Illuminate\Http\Request;
 
@@ -57,6 +58,7 @@ class DistrictController extends Controller
         abort_if_forbidden('item.delete');
         $item = District::where('id','=', $id)->get()->first();
         $item->delete();
+        Quarter::where('district_id', $id)->delete();
         return redirect()->back();
     }
 }
