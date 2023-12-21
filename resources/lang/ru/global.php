@@ -2,6 +2,7 @@
 
 return [
     'places'                                => 'Places',
+    'items'                                => 'Items & Keys',
     'theme'                                 => 'Тема',
     'days'                                  => 'Дней',
     'refund_id'                             => 'Возврат ID',

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('comment');
             $table->string('parent_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -98,4 +98,20 @@ return [
             'quarter_name_ru'   => 'Название квартал',
         ],
     ],
+    'item'           => [
+        'title'          => 'Items',
+        'title_singular' => 'Items',
+        'fields'         => [
+            'id'            => 'ID',
+            'name'          => 'Название',
+        ],
+    ],
+    'key'           => [
+        'title'          => 'Keys',
+        'title_singular' => 'Keys',
+        'fields'         => [
+            'id'            => 'ID',
+            'name'          => 'Название',
+        ],
+    ],
 ];
