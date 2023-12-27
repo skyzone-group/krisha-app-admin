@@ -10,6 +10,7 @@ use App\Http\Controllers\Blade\RegionController;
 use App\Http\Controllers\Blade\DistrictController;
 use App\Http\Controllers\Blade\QuarterController;
 use App\Http\Controllers\Blade\ItemController;
+use App\Http\Controllers\Blade\KeyController;
 /*
 |--------------------------------------------------------------------------
 | Blade (front-end) Routes
@@ -102,6 +103,14 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/admin/item/{item_id}/edit',[ItemController::class,'edit'])->name('itemEdit');
     Route::post('/admin/item/update/{item_id}',[ItemController::class,'update'])->name('itemUpdate');
     Route::delete('/admin/item/delete/{id}',[ItemController::class,'destroy'])->name('itemDestroy');
+
+    # Key
+    Route::get('/admin/keys',[KeyController::class,'index'])->name('keyIndex');
+    Route::get('/admin/key/add',[KeyController::class,'add'])->name('keyAdd');
+    Route::post('/admin/key/create',[KeyController::class,'create'])->name('keyCreate');
+    Route::get('/admin/key/{key_id}/edit',[KeyController::class,'edit'])->name('keyEdit');
+    Route::post('/admin/key/update/{key_id}',[KeyController::class,'update'])->name('keyUpdate');
+    Route::delete('/admin/key/delete/{id}',[KeyController::class,'destroy'])->name('keyDestroy');
 });
 
 // Change language session condition

@@ -97,11 +97,17 @@
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
-            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*item*')) ? "block":'none' }}">
+            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*item*') || Request::is('*key*')) ? "block":'none' }}">
                 <li class="nav-item">
-                    <a href="{{ route('itemIndex') }}" class="nav-link {{ Request::is('*item*') ? "active":'' }}">
+                    <a href="{{ route('itemIndex') }}" class="nav-link {{ (Request::is('*item*')) ? "active":'' }}">
                         <i class="fas fa-angle-right"></i>
                         <p> @lang('cruds.item.title')</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('keyIndex') }}" class="nav-link {{ Request::is('*key*') ? "active":'' }}">
+                        <i class="fas fa-angle-right"></i>
+                        <p> @lang('cruds.key.title')</p>
                     </a>
                 </li>
 {{--                <li class="nav-item">--}}

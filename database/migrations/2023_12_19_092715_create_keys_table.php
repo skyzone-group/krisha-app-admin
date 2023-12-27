@@ -15,11 +15,14 @@ return new class extends Migration
     {
         Schema::create('keys', function (Blueprint $table) {
             $table->id();
+            $table->string('name_uz')->nullable();
+            $table->string('name_ru')->nullable();
+            $table->string('name_en')->nullable();
             $table->string('category_key');
             $table->string('key');
             $table->string('type');
-            $table->string('comment');
-            $table->string('parent_id');
+            $table->text('comment')->nullable();
+            $table->string('parent_id')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

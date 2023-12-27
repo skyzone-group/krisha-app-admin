@@ -112,6 +112,12 @@ return [
         'fields'         => [
             'id'            => 'ID',
             'name'          => 'Название',
+            'category_key_name'          => 'Недвижимость типы',
+            'key_name'          => 'Key for mobile API',
+            'type'          => 'type => sinle | multiple',
+            'single'          => 'Single',
+            'multiple'          => 'Multiple',
+            'comment'          => 'Комментарий',
         ],
     ],
 ];
