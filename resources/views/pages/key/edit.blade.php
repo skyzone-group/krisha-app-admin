@@ -30,11 +30,11 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <?php
-                        echo "<pre>";
-                        print_r($errors);
-                        echo "</pre>";
-                        ?>
+<!--                        --><?php
+//                        echo "<pre>";
+//                        print_r($errors);
+//                        echo "</pre>";
+//                        ?>
                         <form action="{{ route('keyUpdate', $item->id) }}" method="post">
                             @csrf
                             <div class="form-group">
