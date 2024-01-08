@@ -115,9 +115,10 @@ return [
             'category_key_name'          => 'Недвижимость типы',
             'key_name'          => 'Key for mobile API',
             'type'          => 'type => sinle | multiple',
-            'single'          => 'Single',
-            'multiple'          => 'Multiple',
-            'comment'          => 'Комментарий',
+            'single'        => 'Single',
+            'multiple'      => 'Multiple',
+            'comment'       => 'Комментарий',
+            'items'         => 'Items',
         ],
     ],
 ];

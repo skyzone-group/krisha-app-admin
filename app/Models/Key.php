@@ -10,4 +10,9 @@ class Key extends Model
 {
     use SoftDeletes;
     protected $guarded = ['id'];
+
+    //items
+    public function items(){
+        return $this->hasMany(KeyItem::class, 'key_id','id');
+    }
 }

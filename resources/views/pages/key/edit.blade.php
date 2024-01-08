@@ -81,6 +81,48 @@
                                 <label>@lang('cruds.key.fields.comment')</label>
                                 <textarea class="form-control" name="comment">{{ old('comment', $item->comment) }}</textarea>
                             </div>
+                            <div>
+                                <div class="card" style="position: relative; left: 0px; top: 0px;">
+                                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                        <h3 class="card-title">
+                                            <i class="ion ion-clipboard mr-1"></i>
+                                            To Do List
+                                        </h3>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <ul class="todo-list ui-sortable" data-widget="todo-list">
+                                            @foreach($item->items as $keyitems)
+                                                <li class="" style="">
+                                                    <span class="handle ui-sortable-handle">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </span>
+                                                        <input readonly type="text" name="items[]" value="{{ $keyitems->itemname->name_ru ?? 'DELETED' }}">
+                                                </li>
+
+                                            @endforeach
+
+{{--                                            <li class="" style="">--}}
+{{--                                                <span class="handle ui-sortable-handle">--}}
+{{--                                                    <i class="fas fa-ellipsis-v"></i>--}}
+{{--                                                    <i class="fas fa-ellipsis-v"></i>--}}
+{{--                                                </span>--}}
+{{--                                                <input type="text" name="in[]">--}}
+{{--                                            </li>--}}
+{{--                                            <li class="" style="">--}}
+
+{{--                                                <span class="handle ui-sortable-handle">--}}
+{{--                                                    <i class="fas fa-ellipsis-v"></i>--}}
+{{--                                                    <i class="fas fa-ellipsis-v"></i>--}}
+{{--                                                </span>--}}
+
+{{--                                                <input type="text" name="in[]">--}}
+{{--                                            </li>--}}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success float-right">@lang('global.save')</button>
                                 <a href="{{ route('keyIndex') }}" class="btn btn-default float-left">@lang('global.cancel')</a>
@@ -93,4 +135,40 @@
         </div>
     </section>
 
+@endsection
+@section('scripts')
+
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/sparklines/sparkline.js') }}"></script>
+
+    <script src="{{ asset('plugins/jqvmap/jquery.vmap.min.js') }}"></script>
+    <script src="{{ asset('plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+
+    <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+
+    <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+
+    <script src="{{ asset('dist/js/adminlte.js?v=3.2.0') }}"></script>
+
+    <script src="{{ asset('dist/js/demo.js') }}"></script>
+
+    <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 @endsection

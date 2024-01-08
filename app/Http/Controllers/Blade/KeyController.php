@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Blade;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Item;
 use App\Models\Key;
+use App\Models\KeyItem;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +26,8 @@ class KeyController extends Controller
     {
         abort_if_forbidden('key.add');
         $elements = Category::all();
-        return view('pages.key.add', compact('elements'));
+        $items = Item::all();
+        return view('pages.key.add', compact('elements', 'items'));
     }
 
     //create permission
@@ -41,6 +44,8 @@ class KeyController extends Controller
                 }),
             ],
             'type' => 'required',
+            'items' => 'required|array',
+            'items.*' => 'required|integer', // Adjusted rule for integers
         ]);
 
         // If validation fails, redirect back with errors and input
@@ -50,7 +55,25 @@ class KeyController extends Controller
                 ->withInput();
         }
 
-        Key::create($request->all());
+        $result = Key::create($request->all());
+
+        $data = [];
+
+        if($request->has('items'))
+        {
+            foreach ($request->items as $item):
+                $data[] = [
+                    'key_id'          => $result->id,
+                    'item_id'         => $item,
+                    'created_at'      => now(),
+                    'updated_at'      => now(),
+                ];
+            endforeach;
+        }
+
+        if(sizeof($data))
+            KeyItem::insert($data);
+
         return redirect()->route('keyIndex');
     }
 
@@ -58,7 +81,12 @@ class KeyController extends Controller
     public function edit($id)
     {
         abort_if_forbidden('key.edit');
-        $item = Key::where('id','=', $id)->get()->first();
+        $item = Key::with(['items' => function($query){
+                            return $query->with('itemname');
+                        }])
+                    ->where('id','=', $id)
+                    ->get()
+                    ->first();
         $elements = Category::all();
         return view('pages.key.edit',compact('item', 'elements'));
     }
@@ -66,6 +94,7 @@ class KeyController extends Controller
     // update data
     public function update(Request $request,$id)
     {
+        dd($request);
         abort_if_forbidden('key.update');
 
         // Validate the request data

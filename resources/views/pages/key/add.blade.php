@@ -30,11 +30,11 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-<!--                        --><?php
-//                        echo "<pre>";
-//                        print_r($errors);
-//                        echo "</pre>";
-//                        ?>
+                        <?php
+                        echo "<pre>";
+                        print_r($errors);
+                        echo "</pre>";
+                        ?>
                         <form action="{{ route('keyCreate') }}" method="post">
                             @csrf
                             <div class="form-group">
@@ -77,9 +77,21 @@
 
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label>@lang('cruds.key.fields.comment')</label>
                                 <textarea class="form-control" name="comment">{{ old('comment') }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>@lang('cruds.key.fields.items')</label>
+                                <select class="select2" multiple="multiple" name="items[]" data-placeholder="@lang('pleaseSelect')" style="width: 100%;height: 60vh;">
+                                    @foreach($items as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name_ru }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('items'))
+                                    <span class="error" style="color: red">{{ $errors->first('items') }}</span>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success float-right">@lang('global.save')</button>
@@ -93,4 +105,40 @@
         </div>
     </section>
 
+@endsection
+@section('scripts')
+
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/sparklines/sparkline.js') }}"></script>
+
+    <script src="{{ asset('plugins/jqvmap/jquery.vmap.min.js') }}"></script>
+    <script src="{{ asset('plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+
+    <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+
+    <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+
+    <script src="{{ asset('dist/js/adminlte.js?v=3.2.0') }}"></script>
+
+    <script src="{{ asset('dist/js/demo.js') }}"></script>
+
+    <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 @endsection
