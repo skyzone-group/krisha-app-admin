@@ -17,7 +17,9 @@ class KeyController extends Controller
     public function index()
     {
         abort_if_forbidden('key.show');
-        $items = Key::all();
+        $items = Key::with(['items' => function($query){
+                    return $query->with('itemname');
+                }])->get()->all();
         return view('pages.key.index',compact('items'));
     }
 
@@ -94,7 +96,6 @@ class KeyController extends Controller
     // update data
     public function update(Request $request,$id)
     {
-        dd($request);
         abort_if_forbidden('key.update');
 
         // Validate the request data
@@ -117,8 +118,28 @@ class KeyController extends Controller
         }
 
         // If validation passes, update the Key
-        $item = Key::find($id);
-        $item->update($request->all());
+        $result = Key::find($id);
+        $result->update($request->all());
+
+        //item_ids
+        $data = [];
+
+        if($request->has('item_ids'))
+        {
+            KeyItem::where('key_id', $id)->delete();
+
+            foreach ($request->item_ids as $item_id):
+                $data[] = [
+                    'key_id'          => $id,
+                    'item_id'         => $item_id,
+                    'created_at'      => now(),
+                    'updated_at'      => now(),
+                ];
+            endforeach;
+        }
+
+        if(sizeof($data))
+            KeyItem::insert($data);
         return redirect()->route('keyIndex');
     }
 

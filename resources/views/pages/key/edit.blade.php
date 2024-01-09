@@ -86,39 +86,22 @@
                                     <div class="card-header ui-sortable-handle" style="cursor: move;">
                                         <h3 class="card-title">
                                             <i class="ion ion-clipboard mr-1"></i>
-                                            To Do List
+                                            @lang('cruds.key.fields.change_items_order')
                                         </h3>
                                     </div>
 
                                     <div class="card-body">
                                         <ul class="todo-list ui-sortable" data-widget="todo-list">
-                                            @foreach($item->items as $keyitems)
+                                            @foreach($item->items as $key => $keyitems)
                                                 <li class="" style="">
                                                     <span class="handle ui-sortable-handle">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </span>
-                                                        <input readonly type="text" name="items[]" value="{{ $keyitems->itemname->name_ru ?? 'DELETED' }}">
+                                                    <span>{{ $keyitems->itemname->name_ru ?? 'DELETED' }}</span>
+                                                    <input type="hidden" name="item_ids[]" value="{{ $keyitems->item_id }}">
                                                 </li>
-
                                             @endforeach
-
-{{--                                            <li class="" style="">--}}
-{{--                                                <span class="handle ui-sortable-handle">--}}
-{{--                                                    <i class="fas fa-ellipsis-v"></i>--}}
-{{--                                                    <i class="fas fa-ellipsis-v"></i>--}}
-{{--                                                </span>--}}
-{{--                                                <input type="text" name="in[]">--}}
-{{--                                            </li>--}}
-{{--                                            <li class="" style="">--}}
-
-{{--                                                <span class="handle ui-sortable-handle">--}}
-{{--                                                    <i class="fas fa-ellipsis-v"></i>--}}
-{{--                                                    <i class="fas fa-ellipsis-v"></i>--}}
-{{--                                                </span>--}}
-
-{{--                                                <input type="text" name="in[]">--}}
-{{--                                            </li>--}}
                                         </ul>
                                     </div>
                                 </div>
@@ -137,38 +120,21 @@
 
 @endsection
 @section('scripts')
-
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-
-    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
-
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
-
-    <script src="{{ asset('plugins/sparklines/sparkline.js') }}"></script>
-
-    <script src="{{ asset('plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-    <script src="{{ asset('plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-
-    <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-
-    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
-
-    <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-
-    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
-
-    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-
-    <script src="{{ asset('dist/js/adminlte.js?v=3.2.0') }}"></script>
-
     <script src="{{ asset('dist/js/demo.js') }}"></script>
-
     <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 @endsection
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.todo-list').sortable({
+                handle: '.handle',
+                update: function (event, ui) {
+                    var order = $(this).sortable('toArray', { attribute: 'data-id' });
+                    console.log(order);
+                }
+            });
+        });
+    </script>
+@endpush

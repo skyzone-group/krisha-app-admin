@@ -42,6 +42,7 @@
                                 <th>@lang('cruds.key.fields.category_key_name')</th>
                                 <th>@lang('cruds.key.fields.name')</th>
                                 <th>@lang('cruds.key.fields.type')</th>
+                                <th>@lang('cruds.key.fields.params')</th>
                                 <th class="w-25">@lang('global.actions')</th>
                             </tr>
                             </thead>
@@ -52,6 +53,11 @@
                                     <td>{{ $item->category_key }}</td>
                                     <td>{{ $item->name_ru }}</td>
                                     <td>{{ $item->type }}</td>
+                                    <td>
+                                        @foreach($item->items as $element)
+                                            <span class="badge badge-primary">{{ $element->itemname->name_ru }} </span>
+                                        @endforeach
+                                    </td>
                                     <td class="text-center">
                                         @can('key.delete')
                                             <form action="{{ route('keyDestroy',$item->id) }}" method="post">
