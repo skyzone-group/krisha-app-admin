@@ -14,8 +14,10 @@ use App\Http\Controllers\Mobile\ConstantsController;
 
 
 # Public Routes
-Route::post('/mobile/v1/user/sign/check-phone',[LoginController::class,'login']);
-Route::post('/mobile/v1/user/sign/confirm',[LoginController::class,'confirm']);
+Route::post('/mobile/v1/user/sign/check-phone',[LoginController::class,'checkPhone']);
+Route::post('/mobile/v1/user/sign/register',[LoginController::class,'register']);
+Route::post('/mobile/v1/user/sign/login',[LoginController::class,'login']);
+Route::post('/mobile/v1/user/sign/set-password',[LoginController::class,'setPassword']);
 Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
 
 

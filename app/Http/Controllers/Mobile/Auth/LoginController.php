@@ -10,10 +10,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 class LoginController extends ResponseController
 {
-    public function login(Request $request)
+    public function checkPhone(Request $request): array
     {
         if (!$request->has('phone'))
             return self::errorResponse([
@@ -21,6 +23,20 @@ class LoginController extends ResponseController
                 'ru' => 'Введите номер телефона',
                 'en' => 'Input phone number'
             ]);
+
+        // Check Length of phone
+        $phone = phone_formatting($request->get('phone'));
+
+        # check user exist or not
+        $client = Client::where('phone', $phone)->get()->first();
+        if(!is_null($client))
+        {
+            return self::successResponse([
+                'uz' => "Parolni kiriting!",
+                'ru' => "Введите пароль!",
+                'en' => "Enter password!"
+            ]);
+        }
 
         # check blocked or not
         if (Cache::has('blocked-'.$request->phone)){
@@ -43,9 +59,6 @@ class LoginController extends ResponseController
                 'en' => "Too many attempts, as part of security, your number is blocked for 1 hour"
             ]);
         }
-
-        // Check Length of phone
-        $phone = phone_formatting($request->get('phone'));
 
         if (12 < strlen($phone) || strlen($phone) < 9)
             return self::errorResponse([
@@ -80,7 +93,7 @@ class LoginController extends ResponseController
         ]);
     }
 
-    public function confirm(Request $request)
+    public function register(Request $request): array
     {
         if (!$request->has('phone'))
             return self::errorResponse([
@@ -154,5 +167,92 @@ class LoginController extends ResponseController
             'ru' => 'Введен неправильный код',
             'en' => 'Wrong code entered'
         ]);
+    }
+
+    public function login(Request $request)
+    {
+        if (!$request->has('phone'))
+            return self::errorResponse([
+                'uz' => 'Telefon raqam kiritilmagan',
+                'ru' => 'Введите номер телефона',
+                'en' => 'Input phone number'
+            ]);
+
+        if (!$request->has('password'))
+            return self::errorResponse([
+                'uz' => 'Parol kiritilmagan',
+                'ru' => 'Введите пароль',
+                'en' => 'Input password'
+            ]);
+
+        $phone = phone_formatting($request->get('phone'));
+        $client = Client::where('phone', $phone)->get()->first();
+
+        if ($client && Hash::check($request->get('password'), $client->password)) {
+
+            $token = Token::create([
+                'client_id' => $client->id,
+                'token' => Str::uuid(),
+                'token_expires_at' => Carbon::now()->addDays(30)
+            ]);
+
+            return self::successResponse([
+                'id' => $client->id,
+                'fullname' => $client->fullname,
+                'avatar' => $client->avatar,
+                'phone' => $client->phone,
+                'type' => $client->type,
+                'verified' => $client->verified,
+                'token' => $token->token,
+                'token_expires_at' => $token->token_expires_at,
+            ]);
+        }
+        else {
+            return self::errorResponse([
+                'uz' => 'Login yoki parol noto\'g\'ri!',
+                'ru' => 'Логин или пароль неверный!',
+                'en' => 'Login or password is incorrect!'
+            ]);
+        }
+
+    }
+
+    public function setPassword(Request $request)
+    {
+        if (!$request->has('phone'))
+            return self::errorResponse([
+                'uz' => 'Telefon raqam kiritilmagan',
+                'ru' => 'Введите номер телефона',
+                'en' => 'Input phone number'
+            ]);
+
+        if (!$request->has('password'))
+            return self::errorResponse([
+                'uz' => 'Parol raqam kiritilmagan',
+                'ru' => 'Введите пароль',
+                'en' => 'Input password'
+            ]);
+
+        $phone = phone_formatting($request->get('phone'));
+        $client = Client::where('phone', $phone)->get()->first();
+
+        if ($client) {
+
+            $client->password = Hash::make($request->password);
+            $client->save();
+
+            return self::successResponse([
+                'uz' => 'Parol saqlandi!',
+                'ru' => 'Пароль сохранен!',
+                'en' => 'Password saved!'
+            ]);
+        }
+        else {
+            return self::errorResponse([
+                'uz' => 'Login yoki parol noto\'g\'ri!',
+                'ru' => 'Логин или пароль неверный!',
+                'en' => 'Login or password is incorrect!'
+            ]);
+        }
     }
 }
