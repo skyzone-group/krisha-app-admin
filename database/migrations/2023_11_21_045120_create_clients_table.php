@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('fullname')->nullable();
             $table->string('phone')->unique();
             $table->string('avatar')->nullable();
+            $table->string('password')->nullable();
             $table->string('type')->nullable();
             $table->boolean('verified')->default(false);
             $table->softDeletes();
