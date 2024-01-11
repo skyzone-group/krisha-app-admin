@@ -18,7 +18,7 @@ Route::post('/mobile/v1/user/sign/check-phone',[LoginController::class,'checkPho
 Route::post('/mobile/v1/user/sign/register',[LoginController::class,'register']);
 Route::post('/mobile/v1/user/sign/login',[LoginController::class,'login']);
 Route::post('/mobile/v1/user/sign/reset-password-request',[LoginController::class,'resetPasswordRequest']);
-Route::post('/mobile/v1/user/sign/reset-password-confirm',[LoginController::class,'resetPasswordConfirm']);
+Route::post('/mobile/v1/user/sign/reset-password-confirm',[LoginController::class,'register']);
 Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
 
 

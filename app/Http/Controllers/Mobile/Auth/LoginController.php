@@ -82,16 +82,23 @@ class LoginController extends ResponseController
         $check = $otp->check($request->sms_code);
 
         if ($check){
-            $client = Client::updateOrCreate(
-                [
+
+            $client = Client::where('phone', $otp->phone)->first();
+
+            if ($client) {
+                $client->update([
+                    'access_token' => Str::uuid(),
+                    'last_login' => Carbon::now()
+                ]);
+            }
+            else {
+                $client = Client::create([
                     'phone' => $otp->phone,
-                ],
-                [
                     'fullname' => $request->fullname ?? null,
                     'access_token' => Str::uuid(),
                     'last_login' => Carbon::now()
-                ]
-            );
+                ]);
+            }
 
             $token = Token::create([
                 'client_id' => $client->id,
