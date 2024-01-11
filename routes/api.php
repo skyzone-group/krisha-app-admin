@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Blade\ApiUserController;
-use App\Http\Controllers\Mobile\Auth\LoginController;
+use App\Http\Controllers\Mobile\Auth\AuthController;
 use App\Http\Controllers\Mobile\ConstantsController;
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +14,17 @@ use App\Http\Controllers\Mobile\ConstantsController;
 
 
 # Public Routes
-Route::post('/mobile/v1/user/sign/check-phone',[LoginController::class,'checkPhone']);
-Route::post('/mobile/v1/user/sign/register',[LoginController::class,'register']);
-Route::post('/mobile/v1/user/sign/login',[LoginController::class,'login']);
-Route::post('/mobile/v1/user/sign/reset-password-request',[LoginController::class,'resetPasswordRequest']);
-Route::post('/mobile/v1/user/sign/reset-password-confirm',[LoginController::class,'register']);
+Route::post('/mobile/v1/user/sign/check-phone',[AuthController::class,'checkPhone']);
+Route::post('/mobile/v1/user/sign/register',[AuthController::class,'register']);
+Route::post('/mobile/v1/user/sign/login',[AuthController::class,'login']);
+Route::post('/mobile/v1/user/sign/reset-password-request',[AuthController::class,'resetPasswordRequest']);
+Route::post('/mobile/v1/user/sign/reset-password-confirm',[AuthController::class,'register']);
 Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
 
 
 Route::group(['middleware' => 'api-auth'],function (){
-    Route::post('/mobile/v1/user/sign/set-password',[LoginController::class,'setPassword']);
-    Route::post('/mobile/v1/user/sign/logout',[LoginController::class,'logout']);
+    Route::post('/mobile/v1/user/sign/set-password',[AuthController::class,'setPassword']);
+    Route::post('/mobile/v1/user/sign/logout',[AuthController::class,'logout']);
     Route::post('/mobile/v1/user/check',[ApiAuthController::class,'me']);
 
 //    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);

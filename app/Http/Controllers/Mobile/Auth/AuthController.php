@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\Concerns\Has;
 
-class LoginController extends ResponseController
+class AuthController extends ResponseController
 {
     public function checkPhone(Request $request): array
     {
