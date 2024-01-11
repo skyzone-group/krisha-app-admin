@@ -39,58 +39,7 @@ class LoginController extends ResponseController
         }
 
         # check blocked or not
-        if (Cache::has('blocked-'.$request->phone)){
-            $wait  = 60-round((Carbon::now()->diffInSeconds(Cache::get('blocked-'.$request->phone)))/60);
-            return self::errorResponse([
-                'uz' => "Telefon raqam bloklangan, kutish vaqti $wait minut",
-                'ru' => "Номер телефона заблокирован время ожиданий $wait минут ",
-                'en' => "Phone number blocked waiting time $wait minutes"
-            ]);
-        }
-
-        # Check OTP count AND block user
-        $count = OTP::get_count($request->phone);
-        if($count > 5)
-        {
-            Cache::put("blocked-".$request->phone, Carbon::now(), 3600);
-            return self::errorResponse([
-                'uz' => "Urunishlar ko'pligi sabab xavfsizlik yuzasidan sizning raqamingiz 1 soatga bloklandi",
-                'ru' => "Много попыток, в рамках безопасностью ваш номер заблокирован на 1 час",
-                'en' => "Too many attempts, as part of security, your number is blocked for 1 hour"
-            ]);
-        }
-
-        if (12 < strlen($phone) || strlen($phone) < 9)
-            return self::errorResponse([
-                'uz' => "Kiritilgan telefon raqami noto'g'ri formatda",
-                'ru' => 'Номер телефона в неправильном формате',
-                'en' => 'Phone number is in wrong format'
-            ]);
-
-        $last = 'last_resend_'.$phone; //
-
-        if (!Cache::has($last))
-            Cache::put($last, Carbon::now(), 10);
-        else{
-            $wait  = 60 - Carbon::now()->diffInSeconds(Cache::get($last));
-            return self::errorResponse([
-                'uz' => "SMS kod jo'natilgan keyingi urunish $wait soniyadan keyin",
-                'ru' => "СМС код отправлена следующая попытка через $wait секунд",
-                'en' => "SMS code sent next try in $wait seconds"
-            ]);
-        }
-
-        # Send OTP and return session_id
-        $otp = OTP::where('phone',$phone)->where('status',0)->first();
-        if(!is_null($otp))
-            $otp->canceled();
-
-        $session_id = OTP::send($phone,($request->otp_length ?? 5));
-        return self::successResponse([
-            'uz' => "SMS kod yuborildi",
-            'ru' => "SMS-код успешно отправлен",
-            'en' => "SMS code sent successfully"
-        ]);
+        return $this->sendOTP($request, $phone);
     }
 
     public function register(Request $request): array
@@ -261,7 +210,7 @@ class LoginController extends ResponseController
         ]);
     }
 
-    public function resetPasswordRequest(Request $request)
+    public function resetPasswordRequest(Request $request): array
     {
         if (!$request->has('phone'))
             return self::errorResponse([
@@ -284,9 +233,19 @@ class LoginController extends ResponseController
             ]);
         }
 
+        return $this->sendOTP($request, $phone);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $phone
+     * @return array
+     */
+    public function sendOTP(Request $request, string $phone): array
+    {
         # check blocked or not
-        if (Cache::has('blocked-'.$request->phone)){
-            $wait  = 60-round((Carbon::now()->diffInSeconds(Cache::get('blocked-'.$request->phone)))/60);
+        if (Cache::has('blocked-' . $request->phone)) {
+            $wait = 60 - round((Carbon::now()->diffInSeconds(Cache::get('blocked-' . $request->phone))) / 60);
             return self::errorResponse([
                 'uz' => "Telefon raqam bloklangan, kutish vaqti $wait minut",
                 'ru' => "Номер телефона заблокирован время ожиданий $wait минут ",
@@ -296,9 +255,8 @@ class LoginController extends ResponseController
 
         # Check OTP count AND block user
         $count = OTP::get_count($request->phone);
-        if($count > 5)
-        {
-            Cache::put("blocked-".$request->phone, Carbon::now(), 3600);
+        if ($count > 5) {
+            Cache::put("blocked-" . $request->phone, Carbon::now(), 3600);
             return self::errorResponse([
                 'uz' => "Urunishlar ko'pligi sabab xavfsizlik yuzasidan sizning raqamingiz 1 soatga bloklandi",
                 'ru' => "Много попыток, в рамках безопасностью ваш номер заблокирован на 1 час",
@@ -313,12 +271,12 @@ class LoginController extends ResponseController
                 'en' => 'Phone number is in wrong format'
             ]);
 
-        $last = 'last_resend_'.$phone; //
+        $last = 'last_resend_' . $phone; //
 
         if (!Cache::has($last))
             Cache::put($last, Carbon::now(), 10);
-        else{
-            $wait  = 60 - Carbon::now()->diffInSeconds(Cache::get($last));
+        else {
+            $wait = 60 - Carbon::now()->diffInSeconds(Cache::get($last));
             return self::errorResponse([
                 'uz' => "SMS kod jo'natilgan keyingi urunish $wait soniyadan keyin",
                 'ru' => "СМС код отправлена следующая попытка через $wait секунд",
@@ -327,11 +285,11 @@ class LoginController extends ResponseController
         }
 
         # Send OTP and return session_id
-        $otp = OTP::where('phone',$phone)->where('status',0)->first();
-        if(!is_null($otp))
+        $otp = OTP::where('phone', $phone)->where('status', 0)->first();
+        if (!is_null($otp))
             $otp->canceled();
 
-        $session_id = OTP::send($phone,($request->otp_length ?? 5));
+        $session_id = OTP::send($phone, ($request->otp_length ?? 5));
         return self::successResponse([
             'uz' => "SMS kod yuborildi",
             'ru' => "SMS-код успешно отправлен",
