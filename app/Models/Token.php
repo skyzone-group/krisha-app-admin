@@ -102,6 +102,21 @@ class Token extends Model
         ];
     }
 
+    public function auth()
+    {
+        $user = $this->client;
+        return (object)[
+            'id' => $user->id,
+            'fullname' => $user->fullname,
+            'avatar' => $user->avatar,
+            'phone' => $user->phone,
+            'type' => $user->type,
+            'verified' => $user->verified,
+            'access_token' => $this->token,
+            'token_expires_at' => $this->token_expires_at
+        ];
+    }
+
 
 //    public static function generateToken(int $user_id):self
 //    {
@@ -120,9 +135,8 @@ class Token extends Model
 //        return $this->is_active;
 //    }
 //
-//    public function forget()
-//    {
-//        $this->is_active = 0;
-//        $this->save();
-//    }
+    public function forget()
+    {
+        $this->delete();
+    }
 }

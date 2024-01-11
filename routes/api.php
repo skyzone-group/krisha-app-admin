@@ -17,12 +17,16 @@ use App\Http\Controllers\Mobile\ConstantsController;
 Route::post('/mobile/v1/user/sign/check-phone',[LoginController::class,'checkPhone']);
 Route::post('/mobile/v1/user/sign/register',[LoginController::class,'register']);
 Route::post('/mobile/v1/user/sign/login',[LoginController::class,'login']);
-Route::post('/mobile/v1/user/sign/set-password',[LoginController::class,'setPassword']);
+Route::post('/mobile/v1/user/sign/reset-password-request',[LoginController::class,'resetPasswordRequest']);
+Route::post('/mobile/v1/user/sign/reset-password-confirm',[LoginController::class,'resetPasswordConfirm']);
 Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
 
 
 Route::group(['middleware' => 'api-auth'],function (){
+    Route::post('/mobile/v1/user/sign/set-password',[LoginController::class,'setPassword']);
+    Route::post('/mobile/v1/user/sign/logout',[LoginController::class,'logout']);
     Route::post('/mobile/v1/user/check',[ApiAuthController::class,'me']);
+
 //    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
 //    Route::post('/logout',[ApiAuthController::class,'logout']);
 });
