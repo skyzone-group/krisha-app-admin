@@ -17,9 +17,7 @@ class KeyController extends Controller
     public function index()
     {
         abort_if_forbidden('key.show');
-        $items = Key::with(['items' => function($query){
-                    return $query->with('itemname');
-                }])->get()->all();
+        $items = Key::with('items')->get()->all();
         return view('pages.key.index',compact('items'));
     }
 
@@ -83,9 +81,7 @@ class KeyController extends Controller
     public function edit($id)
     {
         abort_if_forbidden('key.edit');
-        $item = Key::with(['items' => function($query){
-                            return $query->with('itemname');
-                        }])
+        $item = Key::with('items')
                     ->where('id','=', $id)
                     ->get()
                     ->first();
@@ -97,7 +93,6 @@ class KeyController extends Controller
     public function update(Request $request,$id)
     {
         abort_if_forbidden('key.update');
-
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'category_key' => 'required',

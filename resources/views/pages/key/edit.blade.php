@@ -92,14 +92,14 @@
 
                                     <div class="card-body">
                                         <ul class="todo-list ui-sortable" data-widget="todo-list">
-                                            @foreach($item->items as $key => $keyitems)
+                                            @foreach($item->items as $element)
                                                 <li class="" style="">
                                                     <span class="handle ui-sortable-handle">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </span>
-                                                    <span>{{ $keyitems->itemname->name_ru ?? 'DELETED' }}</span>
-                                                    <input type="hidden" name="item_ids[]" value="{{ $keyitems->item_id }}">
+                                                    <span>{{ $element->name_ru ?? 'DELETED' }}</span>
+                                                    <input type="hidden" name="item_ids[]" value="{{ $element->pivot->item_id }}">
                                                 </li>
                                             @endforeach
                                         </ul>

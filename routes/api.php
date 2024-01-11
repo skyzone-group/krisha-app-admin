@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Blade\ApiUserController;
 use App\Http\Controllers\Mobile\Auth\AuthController;
 use App\Http\Controllers\Mobile\ConstantsController;
+use App\Http\Controllers\Mobile\KeyController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +21,8 @@ Route::post('/mobile/v1/user/sign/login',[AuthController::class,'login']);
 Route::post('/mobile/v1/user/sign/reset-password-request',[AuthController::class,'resetPasswordRequest']);
 Route::post('/mobile/v1/user/sign/reset-password-confirm',[AuthController::class,'register']);
 Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
+
+Route::post('/mobile/v1/keys/list',[KeyController::class,'list']);
 
 
 Route::group(['middleware' => 'api-auth'],function (){

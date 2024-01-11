@@ -55,7 +55,7 @@
                                     <td>{{ $item->type }}</td>
                                     <td>
                                         @foreach($item->items as $element)
-                                            <span class="badge badge-primary">{{ $element->itemname->name_ru }} </span>
+                                            <span class="badge badge-primary">{{ $element->name_ru }} </span>
                                         @endforeach
                                     </td>
                                     <td class="text-center">
