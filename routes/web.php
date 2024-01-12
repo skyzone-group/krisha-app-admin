@@ -11,6 +11,7 @@ use App\Http\Controllers\Blade\DistrictController;
 use App\Http\Controllers\Blade\QuarterController;
 use App\Http\Controllers\Blade\ItemController;
 use App\Http\Controllers\Blade\KeyController;
+use App\Http\Controllers\Blade\StoryCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Blade (front-end) Routes
@@ -111,6 +112,14 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/admin/key/{key_id}/edit',[KeyController::class,'edit'])->name('keyEdit');
     Route::post('/admin/key/update/{key_id}',[KeyController::class,'update'])->name('keyUpdate');
     Route::delete('/admin/key/delete/{id}',[KeyController::class,'destroy'])->name('keyDestroy');
+
+    # StoryCategory
+    Route::get('/admin/story-categories',[StoryCategoryController::class,'index'])->name('story-categoryIndex');
+    Route::get('/admin/story-category/add',[StoryCategoryController::class,'add'])->name('story-categoryAdd');
+    Route::post('/admin/story-category/create',[StoryCategoryController::class,'create'])->name('story-categoryCreate');
+    Route::get('/admin/story-category/{id}/edit',[StoryCategoryController::class,'edit'])->name('story-categoryEdit');
+    Route::post('/admin/story-category/update/{id}',[StoryCategoryController::class,'update'])->name('story-categoryUpdate');
+    Route::delete('/admin/story-category/delete/{id}',[StoryCategoryController::class,'destroy'])->name('story-categoryDestroy');
 });
 
 // Change language session condition

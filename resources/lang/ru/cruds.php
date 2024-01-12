@@ -123,4 +123,21 @@ return [
             'params'                => 'Параметры',
         ],
     ],
+    'story'           => [
+        'title'          => 'Story',
+        'title_singular' => 'Story',
+        'fields'         => [
+            'id'            => 'ID',
+            'name'          => 'Название',
+        ],
+    ],
+    'story-category'           => [
+        'title'          => 'story-category',
+        'title_singular' => 'story-category',
+        'fields'         => [
+            'id'            => 'ID',
+            'title'          => 'Название',
+            'photo' => 'PHOTO'
+        ],
+    ],
 ];

@@ -226,6 +226,13 @@ if(!function_exists('phone_formatting'))
         return $phone;
     }
 }
+if(!function_exists('deleteFile'))
+{
+    function deleteFile($filename)
+    {
+        return \Illuminate\Support\Facades\File::delete(public_path('/files/').$filename);
+    }
+}
 
 
 

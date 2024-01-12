@@ -110,13 +110,33 @@
                         <p> @lang('cruds.key.title')</p>
                     </a>
                 </li>
+            </ul>
+        </li>
+    </ul>
+
+
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item has-treeview ">
+            <a href="" class="nav-link {{ (Request::is('*story-categor*')) ? "active":'' }}">
+                <i class="fas fa-map-marker"></i>
+                <p>
+                    @lang('cruds.story.title')
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*story-categor*') || Request::is('*key*')) ? "block":'none' }}">
+                <li class="nav-item">
+                    <a href="{{ route('story-categoryIndex') }}" class="nav-link {{ (Request::is('*story-categor*')) ? "active":'' }}">
+                        <i class="fas fa-angle-right"></i>
+                        <p> @lang('cruds.story-category.title')</p>
+                    </a>
+                </li>
 {{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('districtIndex') }}" class="nav-link {{ Request::is('*district*') ? "active":'' }}">--}}
+{{--                    <a href="{{ route('keyIndex') }}" class="nav-link {{ Request::is('*key*') ? "active":'' }}">--}}
 {{--                        <i class="fas fa-angle-right"></i>--}}
-{{--                        <p> @lang('cruds.district.title')</p>--}}
+{{--                        <p> @lang('cruds.key.title')</p>--}}
 {{--                    </a>--}}
 {{--                </li>--}}
-
             </ul>
         </li>
     </ul>

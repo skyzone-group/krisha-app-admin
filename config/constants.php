@@ -17,6 +17,6 @@ return [
     'panel' => [
         'token'         => '',
         'orders_group'  => '',
-        "photo_url"     => "https://app.spring-organic.uz/file/"
+        "file_url"     => "https://krisha.loc/files/"
     ]
 ];
