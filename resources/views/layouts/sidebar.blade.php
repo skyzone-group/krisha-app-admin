@@ -90,16 +90,16 @@
 
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview ">
-            <a href="" class="nav-link {{ (Request::is('*item*')) ? "active":'' }}">
+            <a href="" class="nav-link {{ (Request::is('*/item*')) ? "active":'' }}">
                 <i class="fas fa-map-marker"></i>
                 <p>
                     @lang('global.items')
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
-            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*item*') || Request::is('*key*')) ? "block":'none' }}">
+            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*/item*') || Request::is('*key*')) ? "block":'none' }}">
                 <li class="nav-item">
-                    <a href="{{ route('itemIndex') }}" class="nav-link {{ (Request::is('*item*')) ? "active":'' }}">
+                    <a href="{{ route('itemIndex') }}" class="nav-link {{ (Request::is('*/item*')) ? "active":'' }}">
                         <i class="fas fa-angle-right"></i>
                         <p> @lang('cruds.item.title')</p>
                     </a>
@@ -117,18 +117,24 @@
 
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview ">
-            <a href="" class="nav-link {{ (Request::is('*story-categor*')) ? "active":'' }}">
+            <a href="" class="nav-link {{ (Request::is('*story-categor*') || Request::is('*story-item*')) ? "active":'' }}">
                 <i class="fas fa-map-marker"></i>
                 <p>
                     @lang('cruds.story.title')
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
-            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*story-categor*') || Request::is('*key*')) ? "block":'none' }}">
+            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*story-categor*') || Request::is('*story-item*')) ? "block":'none' }}">
                 <li class="nav-item">
                     <a href="{{ route('story-categoryIndex') }}" class="nav-link {{ (Request::is('*story-categor*')) ? "active":'' }}">
                         <i class="fas fa-angle-right"></i>
                         <p> @lang('cruds.story-category.title')</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('story-itemIndex') }}" class="nav-link {{ (Request::is('*story-item*')) ? "active":'' }}">
+                        <i class="fas fa-angle-right"></i>
+                        <p> @lang('cruds.story-item.title')</p>
                     </a>
                 </li>
 {{--                <li class="nav-item">--}}

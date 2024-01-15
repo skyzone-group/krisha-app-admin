@@ -12,6 +12,7 @@ use App\Http\Controllers\Blade\QuarterController;
 use App\Http\Controllers\Blade\ItemController;
 use App\Http\Controllers\Blade\KeyController;
 use App\Http\Controllers\Blade\StoryCategoryController;
+use App\Http\Controllers\Blade\StoryItemController;
 /*
 |--------------------------------------------------------------------------
 | Blade (front-end) Routes
@@ -120,6 +121,14 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/admin/story-category/{id}/edit',[StoryCategoryController::class,'edit'])->name('story-categoryEdit');
     Route::post('/admin/story-category/update/{id}',[StoryCategoryController::class,'update'])->name('story-categoryUpdate');
     Route::delete('/admin/story-category/delete/{id}',[StoryCategoryController::class,'destroy'])->name('story-categoryDestroy');
+
+    # StoryItem
+    Route::get('/admin/story-items',[StoryItemController::class,'index'])->name('story-itemIndex');
+    Route::get('/admin/story-item/add',[StoryItemController::class,'add'])->name('story-itemAdd');
+    Route::post('/admin/story-item/create',[StoryItemController::class,'create'])->name('story-itemCreate');
+    Route::get('/admin/story-item/{id}/edit',[StoryItemController::class,'edit'])->name('story-itemEdit');
+    Route::post('/admin/story-item/update/{id}',[StoryItemController::class,'update'])->name('story-itemUpdate');
+    Route::delete('/admin/story-item/delete/{id}',[StoryItemController::class,'destroy'])->name('story-itemDestroy');
 });
 
 // Change language session condition

@@ -140,4 +140,18 @@ return [
             'photo' => 'PHOTO'
         ],
     ],
+    'story-item'           => [
+        'title'          => 'story-item',
+        'title_singular' => 'story-item',
+        'fields'         => [
+            'id'            => 'ID',
+            'story_category_id'            => 'story_category_id',
+            'title'             => 'title',
+            'subtitle'          => 'subtitle',
+            'file' => 'file',
+            'estate_id' => 'estate_id',
+            'link' => 'link'
+        ],
+    ],
+
 ];
