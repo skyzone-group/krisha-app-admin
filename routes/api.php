@@ -7,6 +7,8 @@ use App\Http\Controllers\Blade\ApiUserController;
 use App\Http\Controllers\Mobile\Auth\AuthController;
 use App\Http\Controllers\Mobile\ConstantsController;
 use App\Http\Controllers\Mobile\KeyController;
+use App\Http\Controllers\Mobile\StoryCategoryController;
+use App\Http\Controllers\Mobile\StoryItemController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +25,12 @@ Route::post('/mobile/v1/user/sign/reset-password-confirm',[AuthController::class
 Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
 
 Route::post('/mobile/v1/keys/list',[KeyController::class,'list']);
+
+#Stories
+Route::post('/mobile/v1/story/category/list',[StoryCategoryController::class,'list']);
+Route::post('/mobile/v1/story/item/list',[StoryItemController::class,'list']);
+Route::post('/mobile/v1/story/item/view',[StoryItemController::class,'view']);
+
 
 
 Route::group(['middleware' => 'api-auth'],function (){

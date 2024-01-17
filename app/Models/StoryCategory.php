@@ -31,4 +31,9 @@ class StoryCategory extends Model
         \Illuminate\Support\Facades\File::delete($this->absolute_path());
         return $this->delete();
     }
+
+    public function items(){
+        return $this->hasMany(StoryItem::class);
+    }
+
 }
