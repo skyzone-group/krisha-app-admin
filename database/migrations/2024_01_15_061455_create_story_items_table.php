@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('story_items', function (Blueprint $table) {
             $table->id();
+            $table->integer('story_category_id')->default(0);
             $table->string('title_uz')->nullable();
             $table->string('title_ru')->nullable();
             $table->string('title_en')->nullable();
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->string('link')->nullable();
             $table->integer('estate_id')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -16,12 +16,12 @@ class StoryItem extends Model
 
     public function path():string
     {
-        return "/files/".$this->photo;
+        return "/files/".$this->file;
     }
 
     public function absolute_path():string
     {
-        return public_path().'/files/'.$this->photo;
+        return public_path().'/files/'.$this->file;
     }
 
     public function remove()
@@ -30,5 +30,9 @@ class StoryItem extends Model
 
         \Illuminate\Support\Facades\File::delete($this->absolute_path());
         return $this->delete();
+    }
+    //story_category
+    public function story_category(){
+        return $this->belongsTo(StoryCategory::class);
     }
 }

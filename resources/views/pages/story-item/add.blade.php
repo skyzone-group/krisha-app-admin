@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>@lang('cruds.story-category.title')</h1>
+                    <h1>@lang('cruds.story-item.title')</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('global.home')</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('story-categoryIndex') }}">@lang('cruds.story-category.title')</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('story-itemIndex') }}">@lang('cruds.story-item.title')</a></li>
                         <li class="breadcrumb-item active">@lang('global.add')</li>
                     </ol>
                 </div>
@@ -31,7 +31,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
 
-                        <form action="{{ route('story-categoryCreate') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('story-itemCreate') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
 
@@ -42,6 +42,15 @@
                                         <option value="{{ $storyCategory->id }}">{{ $storyCategory->title_ru }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12" id="photo">
+                                        <label class="col-form-label">@lang('cruds.story-item.fields.file')</label>
+                                        <input style="border: 0px; padding-left: 0px" type="file" name="file" class="form-control" value="{{ old('file') }}" required>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -87,20 +96,20 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12" id="photo">
-                                        <label class="col-form-label">@lang('cruds.story-item.fields.file')</label>
-                                        <input style="border: 0px; padding-left: 0px" type="file" name="file" class="form-control" value="{{ old('file') }}" required>
-                                    </div>
-                                </div>
-                            </div>
-
 
 
                             <div class="form-group">
+                                <label for="estate_id">@lang('cruds.story-item.fields.estate_id')</label>
+                                <input type="number" class="form-control"  name="estate_id" value="{{ old('estate_id') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="link">@lang('cruds.story-item.fields.link')</label>
+                                <input type="text" class="form-control"  name="link" value="{{ old('link') }}">
+                            </div>
+
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-success float-right">@lang('global.save')</button>
-                                <a href="{{ route('story-categoryIndex') }}" class="btn btn-default float-left">@lang('global.cancel')</a>
+                                <a href="{{ route('story-itemIndex') }}" class="btn btn-default float-left">@lang('global.cancel')</a>
                             </div>
                         </form>
 

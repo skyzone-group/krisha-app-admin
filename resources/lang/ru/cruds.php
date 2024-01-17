@@ -148,7 +148,7 @@ return [
             'story_category_id'            => 'story_category_id',
             'title'             => 'title',
             'subtitle'          => 'subtitle',
-            'file' => 'file',
+            'file' => 'file (photo or video)',
             'estate_id' => 'estate_id',
             'link' => 'link'
         ],

@@ -39,8 +39,9 @@
                             <thead>
                             <tr>
                                 <th>@lang('cruds.story-item.fields.id')</th>
+                                <th>@lang('cruds.story-item.fields.story_category_id')</th>
                                 <th>@lang('cruds.story-item.fields.title')</th>
-                                <th>@lang('cruds.story-item.fields.photo')</th>
+                                <th>@lang('cruds.story-item.fields.file')</th>
                                 <th class="w-25">@lang('global.actions')</th>
                             </tr>
                             </thead>
@@ -48,10 +49,11 @@
                             @foreach($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
+                                    <td>{{ $item->story_category->title_uz }}</td>
                                     <td>{{ $item->title_ru }}</td>
                                     <td>
-                                        @if($item->photo)
-                                            <a target="_blank" href="{{ config('constants.panel.file_url').$item->photo }}">{{$item->photo}}</a>
+                                        @if($item->file)
+                                            <a target="_blank" href="{{ config('constants.panel.file_url').$item->file }}">{{$item->file}}</a>
                                         @else
                                             -
                                         @endif

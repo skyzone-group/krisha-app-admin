@@ -12,7 +12,7 @@ class StoryItemController extends Controller
     public function index()
     {
         abort_if_forbidden('story-item.show');
-        $items = StoryItem::all();
+        $items = StoryItem::with('story_category')->get();
         return view('pages.story-item.index',compact('items'));
     }
 
@@ -34,6 +34,9 @@ class StoryItemController extends Controller
             $file = $request->file;
             $name = (microtime(true) * 10000) . '.' . $file->extension();
             $item->file = $name;
+
+            $item->file_type = $file->extension();
+
             $file->move($item->public_path(), $name);
             $item->save();
         }
@@ -46,7 +49,8 @@ class StoryItemController extends Controller
     {
         abort_if_forbidden('story-item.edit');
         $item = StoryItem::where('id','=', $id)->get()->first();
-        return view('pages.story-item.edit',compact('item'));
+        $storyCategories = StoryCategory::all();
+        return view('pages.story-item.edit',compact('item','storyCategories'));
     }
 
     // update data
@@ -61,6 +65,7 @@ class StoryItemController extends Controller
             $file = $request->file;
             $name = (microtime(true) * 10000) . '.' . $file->extension();
             $item->file = $name;
+            $item->file_type = $file->extension();
             $file->move($item->public_path(), $name);
         }
 
