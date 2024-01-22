@@ -31,6 +31,9 @@
 	<!-- SweetAlert2 -->
 	<link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 	<link rel="icon" href="/consImages/logoU.png ">
+
+    <link href="{{ asset('css/myStyle.css') }}" rel="stylesheet" type="text/css" />
+    @yield('styles')
 </head>
 
 <body class="{{ auth()->user()->theme()['body'] ?? '' }} hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
@@ -154,6 +157,22 @@
 <script src="{{asset('plugins/sweetalert2-theme-bootstrap-4/sweet-alerts.min.js') }}"></script>
 <!-- MyJs -->
 <script src="{{asset('plugins/bootstrap_my/myScripts.js')}}" type="text/javascript"></script>
+
+<!-- Responsive examples -->
+<script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+<!-- Datatable init js -->
+<script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+<!-- form advanced init -->
+<script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
+<script src="{{ asset('assets/js/pages/job-list.init.js') }}"></script>
+<script src="{{ asset('assets/libs/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('assets/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
+<script src="{{ asset('assets/js/pages/modal.init.js') }}"></script>
+<!-- App js -->
+<script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{asset('assets/libs/bootstrap_my/myScripts.js')}}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>

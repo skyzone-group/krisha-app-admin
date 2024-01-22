@@ -35,9 +35,11 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <!-- Data table -->
-                        <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline table-responsive-lg" role="grid" aria-describedby="dataTable_info">
+                        <table id="dataTable" class="table dt-responsive  w-100">
+
                             <thead>
                             <tr>
+                                <th></th>
                                 <th>@lang('cruds.story-category.fields.id')</th>
                                 <th>@lang('cruds.story-category.fields.title')</th>
                                 <th>@lang('cruds.story-category.fields.photo')</th>
@@ -46,7 +48,8 @@
                             </thead>
                             <tbody>
                             @foreach($items as $item)
-                                <tr>
+                                <tr data-position="{{ $item->position }}" data-category-id="{{ $item->id }}">
+                                    <td><span class="move-item" style="cursor: move;"><i class="fa fa-bars"></i></span></td>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->title_ru }}</td>
                                     <td>
@@ -85,3 +88,65 @@
     </section>
     <!-- /.content -->
 @endsection
+
+@section('scripts')
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script> -->
+
+    <script>
+        // Initialize Sortable.js
+        var dataTable = document.getElementById('dataTable');
+        var sortable = Sortable.create(dataTable.tBodies[0], {
+            handle: '.move-item',
+            onEnd: function(evt) {
+                var sortedData = Array.from(dataTable.tBodies[0].rows).map(function(row) {
+                    return {
+                        position: row.getAttribute('data-position'),
+                        categoryId: row.getAttribute('data-category-id')
+                    };
+                });
+
+                // Send the sorted data to the server using an AJAX request
+                $.ajax({
+                    url: "{{ 'x' }}",
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "categories": sortedData
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Действие успешно завершено.',
+                                toast: true,
+                                position: 'top',
+                                showConfirmButton: false,
+                                timer: 2000,
+                            })
+                            console.log("Categories sorted successfully.");
+                        } else {
+                            console.log("Failed to sort categories.");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: `${error}`,
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2000,
+                        })
+                        console.log("An error occurred while sorting categories.");
+                    }
+                });
+            },
+            animation: 150, // Default animation duration
+            ghostClass: 'sortable-ghost', // Class name for the dragged item
+            chosenClass: 'sortable-chosen', // Class name for the chosen item
+            dragClass: 'sortable-drag', // Class name for the dragging item
+        });
+    </script>
+@endsection
+
