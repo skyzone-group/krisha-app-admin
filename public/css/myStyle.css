@@ -98,10 +98,11 @@ body {
     transform: scale(1.1);
 }
 
+/*transition: box-shadow 0.3s, transform 0.3s;*/
+/*box-shadow: rgba(0, 0, 0, 0.2) 0px 16px 32px 0px;*/
+/*transform: scale(1.01);*/
+
 .sortable-chosen.sortable-ghost {
-    transition: box-shadow 0.3s, transform 0.3s;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 16px 32px 0px;
-    transform: scale(1.01);
     opacity: 1 !important;
     background-color: #88b4bd;
 }
@@ -109,7 +110,6 @@ body {
 .sortable-chosen {
     opacity: 0 !important;
     background-color: #88b4bd;
-    box-shadow: 100% !important;
 }
 
 @media (max-width: 575px){

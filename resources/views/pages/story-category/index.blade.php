@@ -108,7 +108,7 @@
 
                 // Send the sorted data to the server using an AJAX request
                 $.ajax({
-                    url: "{{ 'x' }}",
+                    url: "{{ route('story-categorySort') }}",
                     type: "POST",
                     data: {
                         "_token": "{{ csrf_token() }}",

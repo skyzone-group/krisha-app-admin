@@ -11,8 +11,28 @@ class StoryCategoryController extends Controller
     public function index()
     {
         abort_if_forbidden('story-category.show');
-        $items = StoryCategory::all();
+        $items = StoryCategory::orderBy('position')->get()->all();
         return view('pages.story-category.index',compact('items'));
+    }
+
+    public function sort(Request $request)
+    {
+        if ($request->has('categories')) {
+            $sortedData = $request->input('categories');
+            $order = 1;
+
+            foreach ($sortedData as $sortedCategory) {
+                $categoryId = $sortedCategory['categoryId'];
+                $category = StoryCategory::find($categoryId);
+                $category->position = $order;
+                $category->save();
+                $order++;
+            }
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
     }
 
     // add permission page

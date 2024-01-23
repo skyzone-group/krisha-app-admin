@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/admin/story-category/{id}/edit',[StoryCategoryController::class,'edit'])->name('story-categoryEdit');
     Route::post('/admin/story-category/update/{id}',[StoryCategoryController::class,'update'])->name('story-categoryUpdate');
     Route::delete('/admin/story-category/delete/{id}',[StoryCategoryController::class,'destroy'])->name('story-categoryDestroy');
+    Route::post('/admin/story-category/sort', [StoryCategoryController::class, 'sort'])->name('story-categorySort');
 
     # StoryItem
     Route::get('/admin/story-items',[StoryItemController::class,'index'])->name('story-itemIndex');
