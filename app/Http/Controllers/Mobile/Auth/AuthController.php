@@ -34,7 +34,8 @@ class AuthController extends ResponseController
             return self::successResponse([
                 'uz' => "Parolni kiriting!",
                 'ru' => "Введите пароль!",
-                'en' => "Enter password!"
+                'en' => "Enter password!",
+                'is_new_user' => false
             ]);
         }
 
