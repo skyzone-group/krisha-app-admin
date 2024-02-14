@@ -39,7 +39,7 @@ class AuthController extends ResponseController
         }
 
         # check blocked or not
-        return $this->sendOTP($request, $phone);
+        return $this->sendOTP($request, $phone, true);
     }
 
     public function register(Request $request): array
@@ -248,7 +248,7 @@ class AuthController extends ResponseController
      * @param string $phone
      * @return array
      */
-    public function sendOTP(Request $request, string $phone): array
+    public function sendOTP(Request $request, string $phone, bool $status = false): array
     {
         # check blocked or not
         if (Cache::has('blocked-' . $request->phone)) {
@@ -300,7 +300,8 @@ class AuthController extends ResponseController
         return self::successResponse([
             'uz' => "SMS kod yuborildi",
             'ru' => "SMS-код успешно отправлен",
-            'en' => "SMS code sent successfully"
+            'en' => "SMS code sent successfully",
+            'is_new_user' => $status
         ]);
     }
 }
