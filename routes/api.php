@@ -9,6 +9,7 @@ use App\Http\Controllers\Mobile\ConstantsController;
 use App\Http\Controllers\Mobile\KeyController;
 use App\Http\Controllers\Mobile\StoryCategoryController;
 use App\Http\Controllers\Mobile\StoryItemController;
+use App\Http\Controllers\Mobile\FileController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,6 +32,8 @@ Route::post('/mobile/v1/story/category/list',[StoryCategoryController::class,'li
 Route::post('/mobile/v1/story/item/list',[StoryItemController::class,'list']);
 Route::post('/mobile/v1/story/item/view',[StoryItemController::class,'view']);
 
+# File
+Route::post('/mobile/v1/file/upload',[FileController::class,'upload']);
 
 
 Route::group(['middleware' => 'api-auth'],function (){

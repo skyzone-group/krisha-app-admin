@@ -233,6 +233,18 @@ if(!function_exists('deleteFile'))
         return \Illuminate\Support\Facades\File::delete(public_path('/files/').$filename);
     }
 }
+if (!function_exists('public_file_path')) {
+    function public_file_path():string
+    {
+        return public_path()."/files/";
+    }
+}
 
+if (!function_exists('absolute_file_path')) {
+    function absolute_file_path($image):string
+    {
+        return public_path().'/files/'.$image;
+    }
+}
 
 
