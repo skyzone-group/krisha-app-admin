@@ -118,23 +118,17 @@ class Token extends Model
     }
 
 
-//    public static function generateToken(int $user_id):self
-//    {
-//        $user = ApiUser::find($user_id);
-//        return self::create([
-//            'api_user_id' => $user_id,
-//            'token' => Str::uuid(),
-//            'token_expires_at' => date('Y-m-d H:i:s',strtotime("+ $user->token_valid_period days")),
-//        ]);
-//    }
-//
-//    public function toggleTokenActivation()
-//    {
-//        $this->is_active = !$this->is_active;
-//        $this->save();
-//        return $this->is_active;
-//    }
-//
+    public function getMe()
+    {
+        $user = $this->client;
+        return (object)[
+            'id' => $user->id,
+            'fullname' => $user->fullname,
+            'phone' => $user->phone,
+            'token' => $this->token
+        ];
+    }
+
     public function forget()
     {
         $this->delete();

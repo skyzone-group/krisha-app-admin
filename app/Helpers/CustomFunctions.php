@@ -13,9 +13,9 @@ if (!function_exists('apiAuth')) {
 if (!function_exists('accessToken')) {
     function accessToken()
     {
-        $accessToken = request()->accessToke ?? \App\Models\Token::where('token',request()->bearerToken())->first();
-        request()->accessToken = $accessToken;
-        return $accessToken;
+//        $accessToken = request()->accessToke ?? \App\Models\Token::where('token',request()->bearerToken())->first();
+//        request()->accessToken = $accessToken;
+        return \App\Models\Token::where('token',request()->bearerToken())->first();
     }
 }
 

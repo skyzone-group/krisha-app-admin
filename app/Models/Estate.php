@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Estate extends Model
 {
@@ -37,6 +38,9 @@ class Estate extends Model
         'video',
         'ceiling_height',
         'bathroom_count',
+
+        'price_type',
+        'is_home_number_hidden',
     ];
 
     public function images()

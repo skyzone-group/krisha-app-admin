@@ -10,6 +10,7 @@ use App\Http\Controllers\Mobile\KeyController;
 use App\Http\Controllers\Mobile\StoryCategoryController;
 use App\Http\Controllers\Mobile\StoryItemController;
 use App\Http\Controllers\Mobile\FileController;
+use App\Http\Controllers\Mobile\EstateController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,6 +41,12 @@ Route::group(['middleware' => 'api-auth'],function (){
     Route::post('/mobile/v1/user/sign/set-password',[AuthController::class,'setPassword']);
     Route::post('/mobile/v1/user/sign/logout',[AuthController::class,'logout']);
     Route::post('/mobile/v1/user/check',[ApiAuthController::class,'me']);
+
+
+    # Estates
+    Route::post('/mobile/v1/estate/create',[EstateController::class,'create']);
+
+
 
 //    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
 //    Route::post('/logout',[ApiAuthController::class,'logout']);

@@ -37,9 +37,11 @@ return new class extends Migration
             $table->integer('build_year')->default(0);
             $table->integer('currency_id')->default(0);
             $table->integer('price')->default(0);
-            $table->integer('transaction_type')->default(0);//buy, rent, sell
+            $table->string('price_type')->default('all');
+            $table->string('transaction_type');//buy, rent, sell
             $table->boolean('is_barter')->default(false);//новостройки или вторичка
             $table->boolean('is_negotiable')->default(false);//kelishsa bo'ladimi
+            $table->boolean('is_home_number_hidden')->default(false);//
             $table->string('video', 50)->nullable();
             $table->integer('ceiling_height')->default(0);
             $table->integer('bathroom_count')->default(0);
