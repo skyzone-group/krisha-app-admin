@@ -6,6 +6,7 @@ use App\Services\ResponseController;
 use Illuminate\Http\Request;
 use App\Models\Image;
 use App\Models\Estate;
+use App\Models\KeyItemValue;
 
 class EstateController extends ResponseController
 {
@@ -15,6 +16,7 @@ class EstateController extends ResponseController
     public function create(Request $request)
     {
         $user = accessToken()->getMe();
+
 
         $v = $this->validate($request->all(),[
             'category_type' => 'required',
@@ -78,6 +80,22 @@ class EstateController extends ResponseController
         }
         #end of uploading image
 
+        $key_item_values = $request->get('key_item_values') ?? [];
+        $key_item_values_data = [];
+
+        foreach($key_item_values as $key => $value) {
+            foreach ($value as $item) {
+                $key_item_values_data[] = [
+                    'estate_id' => $estate_id,
+                    'key_id' => $key,
+                    'item_id' => $item,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+        }
+
+        if(sizeof($key_item_values_data)) KeyItemValue::insert($key_item_values_data);
         if(sizeof($imagesData)) Image::insert($imagesData);
 
         return self::successResponse($estate_id);
