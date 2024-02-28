@@ -44,6 +44,7 @@ Route::group(['middleware' => 'api-auth'],function (){
 
 
     # Estates
+    Route::post('/mobile/v1/estate/list',[EstateController::class,'list']);
     Route::post('/mobile/v1/estate/create',[EstateController::class,'create']);
 
 

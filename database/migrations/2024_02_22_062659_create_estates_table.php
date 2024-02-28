@@ -35,7 +35,7 @@ return new class extends Migration
             $table->integer('land_area_type')->default(0);//(соток) or gektar
             $table->text('comment')->nullable();
             $table->integer('build_year')->default(0);
-            $table->integer('currency_id')->default(0);
+            $table->string('currency')->default('usd');
             $table->integer('price')->default(0);
             $table->string('price_type')->default('all');
             $table->string('transaction_type');//buy, rent, sell
@@ -45,6 +45,8 @@ return new class extends Migration
             $table->string('video', 50)->nullable();
             $table->integer('ceiling_height')->default(0);
             $table->integer('bathroom_count')->default(0);
+            $table->string('price_type')->default('all');////mkv or all | default all
+            $table->boolean('is_home_number_hidden')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

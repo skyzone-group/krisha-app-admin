@@ -30,7 +30,7 @@ class Estate extends Model
         'land_area_type',
         'comment',
         'build_year',
-        'currency_id',
+        'currency',
         'price',
         'transaction_type',
         'is_barter',
@@ -50,12 +50,12 @@ class Estate extends Model
 
     public function region()
     {
-        return $this->hasOne(Region::class,'id','region_id');
+        return $this->BelongsTo(Region::class);
     }
 
     public function district()
     {
-        return $this->hasOne(District::class,'id','district_id');
+        return $this->belongsTo(District::class,);
     }
 
     public function quarter()
@@ -64,7 +64,11 @@ class Estate extends Model
     }
     public function underground()
     {
-        return $this->hasOne(Underground::class,'id','underground_id');
+        return $this->BelongsTo(Underground::class);
     }
 
+    public function keys()
+    {
+        return $this->hasMany(KeyItemValue::class,'estate_id','id');
+    }
 }
