@@ -119,11 +119,9 @@ class EstateController extends ResponseController
         return self::successResponse($data);
     }
 
-
     public function create(Request $request)
     {
         $user = accessToken()->getMe();
-
 
         $v = $this->validate($request->all(),[
             'category_type' => 'required',
@@ -170,40 +168,38 @@ class EstateController extends ResponseController
         ]);
         $estate_id = $item->id;
 
-        #Uploading image to server
+        // Upload images to server
         $imagesData = [];
-        $images = $request->get('images') ?? [];
-        for($i = 0; $i < sizeof($images); $i++){
-            if(!is_null($images[$i]))
-            {
+        $images = $request->input('images', []);
+        foreach ($images as $image) {
+            if (!is_null($image)) {
                 $imagesData[] = [
-                    'name'                     => $images[$i],
-                    'estate_id'                => $estate_id ?? 0,
-                    'created_at'               => now(),
-                    'updated_at'               => now(),
+                    'name' => $image,
+                    'estate_id' => $estate_id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
             }
-
         }
         #end of uploading image
 
-        $key_item_values = $request->get('key_item_values') ?? [];
-        $key_item_values_data = [];
-
-        foreach($key_item_values as $key => $value) {
-            foreach ($value as $item) {
-                $key_item_values_data[] = [
+        // Process key item values
+        $keyItemValues = $request->input('key_item_values', []);
+        $keyItemValuesData = [];
+        foreach ($keyItemValues as $key => $values) {
+            foreach ($values as $value) {
+                $keyItemValuesData[] = [
                     'estate_id' => $estate_id,
                     'key_id' => $key,
-                    'item_id' => $item,
+                    'item_id' => $value,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
             }
         }
 
-        if(sizeof($key_item_values_data)) KeyItemValue::insert($key_item_values_data);
-        if(sizeof($imagesData)) Image::insert($imagesData);
+        if (!empty($keyItemValuesData)) KeyItemValue::insert($keyItemValuesData);
+        if (!empty($imagesData)) Image::insert($imagesData);
 
         return self::successResponse($estate_id);
     }
