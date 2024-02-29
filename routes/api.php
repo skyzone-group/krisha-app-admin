@@ -47,7 +47,7 @@ Route::group(['middleware' => 'api-auth'],function (){
     Route::post('/mobile/v1/estate/list',[EstateController::class,'list']);
     Route::post('/mobile/v1/estate/create',[EstateController::class,'create']);
     Route::post('/mobile/v1/estate/update',[EstateController::class,'update']);
-
+    Route::post('/mobile/v1/estate/delete',[EstateController::class,'delete']);
 
 //    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
 //    Route::post('/logout',[ApiAuthController::class,'logout']);

@@ -22,7 +22,7 @@ class EstateController extends ResponseController
         $direction  = $request->input('direction', 'desc');
 
         $query = Estate::query();
-//        $query->where('user_id',$user_id);
+        // $query->where('user_id',$user_id);
 
         // Define an array of searchable fields
         $searchableFields = [
@@ -302,5 +302,14 @@ class EstateController extends ResponseController
 
         return self::successResponse("Esatet ID: $estate_id is updated successfully");
 
+    }
+
+    public function delete(Request $request)
+    {
+        $user = accessToken()->getMe();
+        $estate = Estate::where('user_id', $user->id)->find($request->id);
+        if (!$estate) return self::errorResponse('Estate not found');
+        $estate->delete();
+        return self::successResponse("Estate ID: $request->id is deleted successfully");
     }
 }
