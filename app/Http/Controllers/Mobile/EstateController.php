@@ -306,10 +306,49 @@ class EstateController extends ResponseController
 
     public function delete(Request $request)
     {
+        $v = $this->validate($request->all(), [
+            'id' => 'required'
+        ]);
+
+        if ($v !== true) return $v;
+
         $user = accessToken()->getMe();
         $estate = Estate::where('user_id', $user->id)->find($request->id);
         if (!$estate) return self::errorResponse('Estate not found');
         $estate->delete();
         return self::successResponse("Estate ID: $request->id is deleted successfully");
+    }
+
+    public function view(Request $request)
+    {
+        $v = $this->validate($request->all(), [
+            'id' => 'required'
+        ]);
+
+        if ($v !== true) return $v;
+
+        $estate = Estate::with([
+            'images',
+            'region',
+            'district',
+            'quarter',
+            'underground',
+        ])->find($request->id);
+        if (!$estate) return self::errorResponse('Estate not found');
+
+
+        //Add keys to the estate
+        $keyItems = KeyItemValue::where('estate_id', $request->id)->with('key', 'item')->get();
+        $keyData = [];
+        foreach ($keyItems as $item) {
+            $keyData[$item->key_id]['key'] = $item->key;
+            $keyData[$item->key_id]['items'][] = $item->item;
+        }
+
+        $images = $estate->images->pluck('name')->toArray();
+        $estate = $estate->toArray();
+        $estate['images'] = $images;
+        $estate['keys'] = array_values($keyData);
+        return self::successResponse($estate);
     }
 }
