@@ -16,112 +16,107 @@ class EstateController extends ResponseController
         $user = accessToken()->getMe();
         $user_id = $user->id;
 
-        $limit = $request->limit ?? 10;
-        $page = $request->page ?? 1;
+        $limit      = $request->input('limit', 10);
+        $page       = $request->input('page', 1);
+        $sort       = $request->input('sort', 'id');
+        $direction  = $request->input('direction', 'desc');
 
         $query = Estate::query();
-
-        $region_id       = $request->region_id ?? null;
-        $district_id     = $request->district_id ?? null;
-        $quarter_id      = $request->quarter_id ?? null;
-        $underground_id  = $request->underground_id ?? null;
-        $category_type   = $request->category_type ?? null;
-        $transaction_type = $request->transaction_type ?? null;
-        $price_from      = $request->price_from ?? null;
-        $price_to        = $request->price_to ?? null;
-        $currency        = $request->currency ?? null;
-        $room_count      = $request->room_count ?? null;
-        $floor           = $request->floor ?? null;
-        $floor_count     = $request->floor_count ?? null;
-        $total_area_from = $request->total_area_from ?? null;
-        $total_area_to   = $request->total_area_to ?? null;
-        $kitchen_area_from = $request->kitchen_area_from ?? null;
-        $kitchen_area_to = $request->kitchen_area_to ?? null;
-        $land_area_from  = $request->land_area_from ?? null;
-        $land_area_to    = $request->land_area_to ?? null;
-        $land_area_type  = $request->land_area_type ?? null;
-        $build_year_from = $request->build_year_from ?? null;
-        $build_year_to   = $request->build_year_to ?? null;
-        $ceiling_height_from = $request->ceiling_height_from ?? null;
-        $ceiling_height_to = $request->ceiling_height_to ?? null;
-        $bathroom_count  = $request->bathroom_count ?? null;
-        $is_owner        = $request->is_owner ?? null;
-        $is_new          = $request->is_new ?? null;
-        $is_barter       = $request->is_barter ?? null;
-        $is_negotiable   = $request->is_negotiable ?? null;
-        $is_home_number_hidden = $request->is_home_number_hidden ?? null;
-        $price_type      = $request->price_type ?? null;
-        $sort            = $request->sort ?? 'id';
-        $direction       = $request->direction ?? 'desc';
-
         $query->where('user_id',$user_id);
 
-        if($region_id) $query->where('region_id',$region_id);
-        if($district_id) $query->where('district_id',$district_id);
-        if($quarter_id) $query->where('quarter_id',$quarter_id);
-        if($underground_id) $query->where('underground_id',$underground_id);
-        if($category_type) $query->where('category_type',$category_type);
-        if($transaction_type) $query->where('transaction_type',$transaction_type);
-        if($price_from) $query->where('price','>=',$price_from);
-        if($price_to) $query->where('price','<=',$price_to);
-        if($currency) $query->where('currency',$currency);
-        if($room_count) $query->where('room_count',$room_count);
-        if($floor) $query->where('floor',$floor);
-        if($floor_count) $query->where('floor_count',$floor_count);
-        if($total_area_from) $query->where('total_area','>=',$total_area_from);
-        if($total_area_to) $query->where('total_area','<=',$total_area_to);
-        if($kitchen_area_from) $query->where('kitchen_area','>=',$kitchen_area_from);
-        if($kitchen_area_to) $query->where('kitchen_area','<=',$kitchen_area_to);
-        if($land_area_from) $query->where('land_area','>=',$land_area_from);
-        if($land_area_to) $query->where('land_area','<=',$land_area_to);
-        if($land_area_type) $query->where('land_area_type',$land_area_type);
-        if($build_year_from) $query->where('build_year','>=',$build_year_from);
-        if($build_year_to) $query->where('build_year','<=',$build_year_to);
-        if($ceiling_height_from) $query->where('ceiling_height','>=',$ceiling_height_from);
-        if($ceiling_height_to) $query->where('ceiling_height','<=',$ceiling_height_to);
-        if($bathroom_count) $query->where('bathroom_count',$bathroom_count);
-        if($is_owner) $query->where('is_owner',$is_owner);
-        if($is_new) $query->where('is_new',$is_new);
-        if($is_barter) $query->where('is_barter',$is_barter);
-        if($is_negotiable) $query->where('is_negotiable',$is_negotiable);
-        if($is_home_number_hidden) $query->where('is_home_number_hidden',$is_home_number_hidden);
-        if($price_type) $query->where('price_type',$price_type);
+        // Define an array of searchable fields
+        $searchableFields = [
+            'region_id', 'district_id', 'quarter_id', 'underground_id', 'category_type', 'transaction_type',
+            'price', 'currency', 'room_count', 'floor', 'floor_count', 'total_area', 'kitchen_area',
+            'land_area', 'land_area_type', 'build_year', 'ceiling_height', 'bathroom_count', 'is_owner',
+            'is_new', 'is_barter', 'is_negotiable', 'is_home_number_hidden', 'price_type',
+
+            'price_from',
+            'room_count_from',
+            'total_area_from',
+            'kitchen_area_from',
+            'build_year_from',
+            'ceiling_height_from',
+            'land_area_from',
+
+            'price_to',
+            'room_count_to',
+            'total_area_to',
+            'kitchen_area_to',
+            'build_year_to',
+            'ceiling_height_to',
+            'land_area_to'
+        ];
+
+        // Loop through the searchable fields and apply filters if they exist in the request
+        foreach ($searchableFields as $field) {
+            if ($value = $request->input($field)) {
+                // If the field ends with "_from", use greater than or equal to comparison
+                if (str_contains($field, '_from')) {
+                    $query->where(str_replace('_from', '', $field), '>=', $value);
+                }
+                // If the field ends with "_to", use less than or equal to comparison
+                elseif (str_contains($field, '_to')) {
+                    $query->where(str_replace('_to', '', $field), '<=', $value);
+                } else {
+                    $query->where($field, $value);
+                }
+            }
+        }
 
         $query = $query->with([
-                            'images',
-                            'region',
-                            'district',
-                            'quarter',
-                            'underground',
-                            'keys' => function($query){
-                                $query->with('key','item');
-                            }
+                        'images:name', // Only retrieve the 'name' column of images
+                        'region',
+                        'district',
+                        'quarter',
+                        'underground',
                     ]);
 
         $total = $query->count();
-        $results = $query->orderBy($sort,$direction)
-                    ->limit($limit)
-                    ->offset(($page-1)*$limit)
-                    ->get();
 
-        $data['count'] = $total;
+        // Retrieve results with sorting, pagination, and limit
+        $results = $query->orderBy($sort, $direction)
+            ->offset(($page - 1) * $limit)
+            ->limit($limit)
+            ->get();
+
+        // Extract IDs from results for efficient database query
+        $estateIds = $results->pluck('id');
+
+        // Retrieve key items for all estate IDs
+        $keyItems = KeyItemValue::whereIn('estate_id', $estateIds)
+            ->with('key', 'item')
+            ->get();
+
+        // Group key items by estate ID
+        $keyData = [];
+        foreach ($keyItems as $item) {
+            $keyData[$item->estate_id][$item->key_id]['key'] = $item->key;
+            $keyData[$item->estate_id][$item->key_id]['items'][] = $item->item;
+        }
+
+        // Prepare extra data for estates
+        $extraData = [];
+        foreach ($keyData as $estateId => $items) {
+            $extraData[$estateId] = array_values($items);
+        }
+
+        // Prepare estates with optimized data structure
         $estates = [];
+        foreach ($results as $item) {
+            $estate = $item->toArray();
+            $estate['images'] = $item->images->pluck('name')->toArray(); // Convert images to an array of names
+            $estate['keys'] = $extraData[$item->id] ?? []; // Retrieve extra data for the estate
+            $estates[] = $estate;
+        }
+        // Prepare response data
+        $data = [
+            'count' => $total, // Assuming $total is defined elsewhere
+            'estates' => $estates,
+        ];
 
-        foreach ($results as $item):
-            $images = [];
-            if(!is_null($item->images))
-            {
-                foreach ($item->images as $image):
-                    $images[] = $image->name;
-                endforeach;
-                unset($item->images);
-                $item->images = $images;
-            }
-            $estates[] = $item;
-        endforeach;
-        $data['estates'] = $estates;
+        // Return success response
         return self::successResponse($data);
-
     }
 
 
