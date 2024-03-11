@@ -153,5 +153,21 @@ return [
             'link' => 'link'
         ],
     ],
+    'sidebar-jk'           => [
+        'title'          => 'JK & Застройщик',
+        'title_singular' => 'JK & Застройщик',
+        'fields'         => [
+            'id'            => 'ID',
+            'name'          => 'Название',
+        ],
+    ],
+    'developer'           => [
+        'title'          => 'Developers',
+        'title_singular' => 'Developers',
+        'fields'         => [
+            'id'            => 'ID',
+            'name'          => 'Название',
+        ],
+    ],
 
 ];

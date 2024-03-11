@@ -148,6 +148,33 @@
     </ul>
 
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item has-treeview ">
+            <a href="" class="nav-link {{ (Request::is('*/developer*')) ? "active":'' }}">
+                <i class="fas fa-map-marker"></i>
+                <p>
+                    @lang('cruds.sidebar-jk.title')
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview pl-3" style="display: {{ (Request::is('*/developer*') || Request::is('*developer*')) ? "block":'none' }}">
+                <li class="nav-item">
+                    <a href="{{ route('developerIndex') }}" class="nav-link {{ (Request::is('*/developer*')) ? "active":'' }}">
+                        <i class="fas fa-angle-right"></i>
+                        <p> @lang('cruds.developer.title')</p>
+                    </a>
+                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('keyIndex') }}" class="nav-link {{ Request::is('*key*') ? "active":'' }}">--}}
+{{--                        <i class="fas fa-angle-right"></i>--}}
+{{--                        <p> @lang('cruds.key.title')</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+            </ul>
+        </li>
+    </ul>
+
+
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">
             <i class="fas fa-palette"></i>
