@@ -33,12 +33,12 @@ class ResponseController
     {
         if (count($data))
             return [
-                'status' => false,
+                'success' => false,
                 'data' => $message
             ];
         else
             return [
-                'status' => false,
+                'success' => false,
                 'data' => $message
             ];
 
@@ -47,7 +47,7 @@ class ResponseController
     public static function authFailed()
     {
         return [
-            'status' => false,
+            'success' => false,
             'data' => [
                 'uz' => 'Avtorizatsiyada xatolik!',
                 'ru' => "Авторизация не удалась!",
@@ -59,7 +59,7 @@ class ResponseController
     public function errorMethodUndefined($method = '')
     {
         return [
-            'status' => false,
+            'success' => false,
             'data' => [
                 'uz' => $method.' metodi topilmadi!',
                 'ru' => 'Метод '.$method.' не найден!',

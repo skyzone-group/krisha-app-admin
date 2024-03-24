@@ -25,7 +25,7 @@ class OTP extends Model
         if ($phone == '998953226600')
             $rand = 12345;
 
-        $rand = 12345;
+        $rand = 1234;
 
         $message = "Код авторизации на систему real estate app. Код $rand";
         $phone = phone_formatting($phone);

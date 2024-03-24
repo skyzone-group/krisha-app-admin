@@ -162,8 +162,8 @@ return [
         ],
     ],
     'developer'           => [
-        'title'          => 'Developers',
-        'title_singular' => 'Developers',
+        'title'          => 'Застройщик',
+        'title_singular' => 'Застройщик',
         'fields'         => [
             'id'            => 'ID',
             'name'          => 'Название',
