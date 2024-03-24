@@ -263,7 +263,7 @@ class AuthController extends ResponseController
 
         # Check OTP count AND block user
         $count = OTP::get_count($request->phone);
-        if ($count > 5) {
+        if ($count > 10000) {
             Cache::put("blocked-" . $request->phone, Carbon::now(), 3600);
             return self::errorResponse([
                 'uz' => "Urunishlar ko'pligi sabab xavfsizlik yuzasidan sizning raqamingiz 1 soatga bloklandi",
@@ -282,7 +282,7 @@ class AuthController extends ResponseController
         $last = 'last_resend_' . $phone; //
 
         if (!Cache::has($last))
-            Cache::put($last, Carbon::now(), 10);
+            Cache::put($last, Carbon::now(), 1);
         else {
             $wait = 60 - Carbon::now()->diffInSeconds(Cache::get($last));
             return self::errorResponse([
