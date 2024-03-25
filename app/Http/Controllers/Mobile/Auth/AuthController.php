@@ -20,8 +20,7 @@ class AuthController extends ResponseController
         if (!$request->has('phone'))
             return self::errorResponse([
                 'uz' => 'Telefon raqam kiritilmagan',
-                'ru' => 'Введите номер телефона',
-                'en' => 'Input phone number'
+                'ru' => 'Введите номер телефона'
             ]);
 
         // Check Length of phone
@@ -31,12 +30,15 @@ class AuthController extends ResponseController
         $client = Client::where('phone', $phone)->get()->first();
         if(!is_null($client))
         {
-            return self::successResponse([
-                'uz' => "Parolni kiriting!",
-                'ru' => "Введите пароль!",
-                'en' => "Enter password!",
-                'is_new_user' => false
-            ]);
+            return self::successResponse(
+                [
+                    'is_new_user' => !is_null($client->password)
+                ],
+                [
+                    'uz' => "Parolni kiriting!",
+                    'ru' => "Введите пароль!"
+                ]
+            );
         }
 
         # check blocked or not
@@ -49,14 +51,12 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => 'Telefon raqam kiritilmagan',
                 'ru' => 'Введите номер телефона',
-                'en' => 'Input phone number'
             ]);
 
         if (!$request->has('sms_code') || ($request->has('sms_code') && strlen($request->get('sms_code')) == 0))
             return self::errorResponse([
                 'uz' => 'Tasdiqlash kodi kiritilmagan',
                 'ru' => 'Заполните код подтверждения',
-                'en' => 'Fill in the verification code'
             ]);
 
         $phone = phone_formatting($request->get('phone'));
@@ -66,7 +66,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => 'Sessiya topilmadi',
                 'ru' => 'Сессия не найден',
-                'en' => 'Session not found'
             ]);
 
         if (strtotime($otp->expires_at) <  strtotime(Carbon::now()))
@@ -76,7 +75,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => 'SMS kodning amal qilish muddati tugagan',
                 'ru' => 'Срок действия SMS-кода истек',
-                'en' => 'SMS code was expired'
             ]);
         }
 
@@ -122,7 +120,6 @@ class AuthController extends ResponseController
         return self::errorResponse([
             'uz' => "Noto'g'ri kod kiritildi",
             'ru' => 'Введен неправильный код',
-            'en' => 'Wrong code entered'
         ]);
     }
 
@@ -132,14 +129,12 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => 'Telefon raqam kiritilmagan',
                 'ru' => 'Введите номер телефона',
-                'en' => 'Input phone number'
             ]);
 
         if (!$request->has('password'))
             return self::errorResponse([
                 'uz' => 'Parol kiritilmagan',
                 'ru' => 'Введите пароль',
-                'en' => 'Input password'
             ]);
 
         $phone = phone_formatting($request->get('phone'));
@@ -168,7 +163,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => 'Login yoki parol noto\'g\'ri!',
                 'ru' => 'Логин или пароль неверный!',
-                'en' => 'Login or password is incorrect!'
             ]);
         }
 
@@ -181,7 +175,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => 'Parol kiritilmagan',
                 'ru' => 'Введите пароль',
-                'en' => 'Input password'
             ]);
 
         $auth = accessToken()->auth();
@@ -192,17 +185,15 @@ class AuthController extends ResponseController
             $client->password = Hash::make($request->password);
             $client->save();
 
-            return self::successResponse([
+            return self::successResponse([],[
                 'uz' => 'Parol saqlandi!',
                 'ru' => 'Пароль сохранен!',
-                'en' => 'Password saved!'
             ]);
         }
         else {
             return self::errorResponse([
                 'uz' => 'Kutilmagan xatolik yuz berdi',
                 'ru' => 'Произошла непредвиденная ошибка',
-                'en' => 'Unexpected error occurred'
             ]);
         }
     }
@@ -211,10 +202,9 @@ class AuthController extends ResponseController
     {
         accessToken()->forget($request->bearerToken());
 
-        return self::successResponse([
+        return self::successResponse([],[
             'uz' => 'Hisobdan chiqildi',
             'ru' => 'Logged out',
-            'en' => 'Logged out'
         ]);
     }
 
@@ -224,7 +214,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => 'Telefon raqam kiritilmagan',
                 'ru' => 'Введите номер телефона',
-                'en' => 'Input phone number'
             ]);
 
         // Check Length of phone
@@ -237,7 +226,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => "Telefon raqam topilmadi",
                 'ru' => "Номер телефона не найден",
-                'en' => "Phone number not found"
             ]);
         }
 
@@ -257,7 +245,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => "Telefon raqam bloklangan, kutish vaqti $wait minut",
                 'ru' => "Номер телефона заблокирован время ожиданий $wait минут ",
-                'en' => "Phone number blocked waiting time $wait minutes"
             ]);
         }
 
@@ -268,7 +255,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => "Urunishlar ko'pligi sabab xavfsizlik yuzasidan sizning raqamingiz 1 soatga bloklandi",
                 'ru' => "Много попыток, в рамках безопасностью ваш номер заблокирован на 1 час",
-                'en' => "Too many attempts, as part of security, your number is blocked for 1 hour"
             ]);
         }
 
@@ -276,7 +262,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => "Kiritilgan telefon raqami noto'g'ri formatda",
                 'ru' => 'Номер телефона в неправильном формате',
-                'en' => 'Phone number is in wrong format'
             ]);
 
         $last = 'last_resend_' . $phone; //
@@ -288,7 +273,6 @@ class AuthController extends ResponseController
             return self::errorResponse([
                 'uz' => "SMS kod jo'natilgan keyingi urunish $wait soniyadan keyin",
                 'ru' => "СМС код отправлена следующая попытка через $wait секунд",
-                'en' => "SMS code sent next try in $wait seconds"
             ]);
         }
 
@@ -298,11 +282,14 @@ class AuthController extends ResponseController
             $otp->canceled();
 
         $session_id = OTP::send($phone, ($request->otp_length ?? 5));
-        return self::successResponse([
-            'uz' => "SMS kod yuborildi",
-            'ru' => "SMS-код успешно отправлен",
-            'en' => "SMS code sent successfully",
-            'is_new_user' => $status
-        ]);
+        return self::successResponse(
+            [
+                'status' => $status
+            ],
+            [
+                'uz' => "SMS kod yuborildi",
+                'ru' => "SMS-код успешно отправлен"
+            ]
+            );
     }
 }

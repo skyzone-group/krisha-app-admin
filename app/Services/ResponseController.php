@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ResponseController
 {
-    public static function successResponse($data, $message = "")
+    public static function successResponse($data, $message = [])
     {
         return [
             'success' => true,
@@ -21,25 +21,27 @@ class ResponseController
     {
         return [
             'success' => false,
-            'data' => [
+            'message' => [
                 'uz' => $validation->errors()->first(),
                 'ru' => $validation->errors()->first(),
-                'en' => $validation->errors()->first(),
-            ]
+            ],
+            'data' => []
         ];
     }
 
-    public static function errorResponse($message,$data = [])
+    public static function errorResponse($message = [], $data = [])
     {
         if (count($data))
             return [
                 'success' => false,
-                'data' => $message
+                'message' => $message,
+                'data' => $data
             ];
         else
             return [
                 'success' => false,
-                'data' => $message
+                'message' => $message,
+                'data' => []
             ];
 
     }
@@ -48,11 +50,11 @@ class ResponseController
     {
         return [
             'success' => false,
-            'data' => [
+            'message' => [
                 'uz' => 'Avtorizatsiyada xatolik!',
                 'ru' => "Авторизация не удалась!",
-                'en' => "Authorization failed!"
-            ]
+            ],
+            'data' => []
         ];
     }
 
@@ -60,11 +62,11 @@ class ResponseController
     {
         return [
             'success' => false,
-            'data' => [
+            'message' => [
                 'uz' => $method.' metodi topilmadi!',
                 'ru' => 'Метод '.$method.' не найден!',
-                'en' => 'Method '.$method.' not found!',
-            ]
+            ],
+            'data' => []
         ];
     }
 
@@ -76,7 +78,7 @@ class ResponseController
     public function validate(array $params, array $rules)
     {
         // Set the desired languages for error messages
-        $languages = ['uz','en','ru'];
+        $languages = ['uz', 'ru'];
 
         $errors = [];
 
