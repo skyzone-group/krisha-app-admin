@@ -28,7 +28,7 @@ class AuthController extends ResponseController
 
         # check user exist or not
         $client = Client::where('phone', $phone)->get()->first();
-        if(!is_null($client))
+        if(!is_null($client) && !is_null($client->password))
         {
             return self::successResponse(
                 [
@@ -284,7 +284,7 @@ class AuthController extends ResponseController
         $session_id = OTP::send($phone, ($request->otp_length ?? 5));
         return self::successResponse(
             [
-                'status' => $status
+                'is_new_user' => $status
             ],
             [
                 'uz' => "SMS kod yuborildi",
