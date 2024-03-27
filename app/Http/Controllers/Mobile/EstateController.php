@@ -201,7 +201,7 @@ class EstateController extends ResponseController
         if (!empty($keyItemValuesData)) KeyItemValue::insert($keyItemValuesData);
         if (!empty($imagesData)) Image::insert($imagesData);
 
-        return self::successResponse($estate_id);
+        return self::successResponse($estate_id, __("mobile.estate.created"));
     }
 
     public function update(Request $request)
@@ -222,7 +222,7 @@ class EstateController extends ResponseController
 
         // Find the estate
         $estate = Estate::where('user_id', $user->id)->find($request->id);
-        if (!$estate) return self::errorResponse('Estate not found');
+        if (!$estate) return self::errorResponse(__("mobile.estate.not_found"));
 
         // Update the estate
         $estate->update([
@@ -300,7 +300,7 @@ class EstateController extends ResponseController
         if (!empty($keyItemValuesData)) KeyItemValue::insert($keyItemValuesData);
         if (!empty($imagesData)) Image::insert($imagesData);
 
-        return self::successResponse("Esatet ID: $estate_id is updated successfully");
+        return self::successResponse($estate_id, __("mobile.estate.updated"));
 
     }
 
@@ -314,9 +314,9 @@ class EstateController extends ResponseController
 
         $user = accessToken()->getMe();
         $estate = Estate::where('user_id', $user->id)->find($request->id);
-        if (!$estate) return self::errorResponse('Estate not found');
+        if (!$estate) return self::errorResponse(__("mobile.estate.not_found"));
         $estate->delete();
-        return self::successResponse("Estate ID: $request->id is deleted successfully");
+        return self::successResponse($request->id, __("mobile.estate.deleted"));
     }
 
     public function view(Request $request)
@@ -334,7 +334,8 @@ class EstateController extends ResponseController
             'quarter',
             'underground',
         ])->find($request->id);
-        if (!$estate) return self::errorResponse('Estate not found');
+
+        if (!$estate) return self::errorResponse(__("mobile.estate.not_found"));
 
 
         //Add keys to the estate

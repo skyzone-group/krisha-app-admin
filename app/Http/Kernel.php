@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\SetLocale::class,
+
     ];
 
     /**
@@ -44,7 +45,8 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\SetLocale::class,
+//            \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\Localization::class,
         ],
     ];
 
@@ -67,5 +69,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'api-auth' => \App\Http\Middleware\ApiToken::class,
         'ajax.check' => \App\Http\Middleware\ApiAjax::class,
+        'localization' => \App\Http\Middleware\Localization::class,
     ];
 }

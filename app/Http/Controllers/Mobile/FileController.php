@@ -27,6 +27,6 @@ class FileController extends ResponseController
             return self::successResponse($name);
         }
 
-        return self::errorResponse(ResponseMessage::ERROR_OCCURRED);
+        return self::errorResponse(__("mobile.global.error_occurred"));
     }
 }

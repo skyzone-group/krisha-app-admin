@@ -12,10 +12,7 @@ class ConstantsController extends ResponseController
     public function list()
     {
         $regions = Region::with('districts', 'districts.quarters')->get()->all();
-
-
         $data['regions'] = $regions;
-
         return self::successResponse($data);
     }
 }

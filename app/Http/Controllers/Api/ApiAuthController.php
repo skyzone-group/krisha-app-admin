@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\ApiUser;
 use App\Models\Token;
 use Illuminate\Http\Request;
+use App\Services\ResponseController;
 
 class ApiAuthController extends ResponseController
 {

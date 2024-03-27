@@ -18,40 +18,45 @@ use App\Http\Controllers\Mobile\EstateController;
 */
 
 
-# Public Routes
-Route::post('/mobile/v1/user/sign/check-phone',[AuthController::class,'checkPhone']);
-Route::post('/mobile/v1/user/sign/register',[AuthController::class,'register']);
-Route::post('/mobile/v1/user/sign/login',[AuthController::class,'login']);
-Route::post('/mobile/v1/user/sign/reset-password-request',[AuthController::class,'resetPasswordRequest']);
-Route::post('/mobile/v1/user/sign/reset-password-confirm',[AuthController::class,'register']);
-Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
 
-Route::post('/mobile/v1/keys/list',[KeyController::class,'list']);
+# Localization route groups
+Route::middleware("localization")->group(function () {
 
-#Stories
-Route::post('/mobile/v1/story/category/list',[StoryCategoryController::class,'list']);
-Route::post('/mobile/v1/story/item/list',[StoryItemController::class,'list']);
-Route::post('/mobile/v1/story/item/view',[StoryItemController::class,'view']);
+    # Public Routes
+    Route::post('/mobile/v1/user/sign/check-phone',[AuthController::class,'checkPhone']);
+    Route::post('/mobile/v1/user/sign/register',[AuthController::class,'register']);
+    Route::post('/mobile/v1/user/sign/login',[AuthController::class,'login']);
+    Route::post('/mobile/v1/user/sign/reset-password-request',[AuthController::class,'resetPasswordRequest']);
+    Route::post('/mobile/v1/user/sign/reset-password-confirm',[AuthController::class,'register']);
+    Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
 
-# File
-Route::post('/mobile/v1/file/upload',[FileController::class,'upload']);
+    Route::post('/mobile/v1/keys/list',[KeyController::class,'list']);
 
+    #Stories
+    Route::post('/mobile/v1/story/category/list',[StoryCategoryController::class,'list']);
+    Route::post('/mobile/v1/story/item/list',[StoryItemController::class,'list']);
+    Route::post('/mobile/v1/story/item/view',[StoryItemController::class,'view']);
 
-Route::group(['middleware' => 'api-auth'],function (){
-    Route::post('/mobile/v1/user/sign/set-password',[AuthController::class,'setPassword']);
-    Route::post('/mobile/v1/user/sign/logout',[AuthController::class,'logout']);
-    Route::post('/mobile/v1/user/check',[ApiAuthController::class,'me']);
+    # File
+    Route::post('/mobile/v1/file/upload',[FileController::class,'upload']);
 
 
-    # Estates
-    Route::post('/mobile/v1/estate/list',[EstateController::class,'list']);
-    Route::post('/mobile/v1/estate/create',[EstateController::class,'create']);
-    Route::post('/mobile/v1/estate/update',[EstateController::class,'update']);
-    Route::post('/mobile/v1/estate/delete',[EstateController::class,'delete']);
-    Route::post('/mobile/v1/estate/view',[EstateController::class,'view']);
+    Route::group(['middleware' => 'api-auth'],function (){
+        Route::post('/mobile/v1/user/sign/set-password',[AuthController::class,'setPassword']);
+        Route::post('/mobile/v1/user/sign/logout',[AuthController::class,'logout']);
+        Route::post('/mobile/v1/user/check',[ApiAuthController::class,'me']);
 
-//    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
-//    Route::post('/logout',[ApiAuthController::class,'logout']);
+
+        # Estates
+        Route::post('/mobile/v1/estate/list',[EstateController::class,'list']);
+        Route::post('/mobile/v1/estate/create',[EstateController::class,'create']);
+        Route::post('/mobile/v1/estate/update',[EstateController::class,'update']);
+        Route::post('/mobile/v1/estate/delete',[EstateController::class,'delete']);
+        Route::post('/mobile/v1/estate/view',[EstateController::class,'view']);
+
+    //    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
+    //    Route::post('/logout',[ApiAuthController::class,'logout']);
+    });
 });
 
 Route::group(['middleware' => 'ajax.check'],function (){

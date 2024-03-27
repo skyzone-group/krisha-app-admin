@@ -18,64 +18,41 @@ class AuthController extends ResponseController
     public function checkPhone(Request $request): array
     {
         if (!$request->has('phone'))
-            return self::errorResponse([
-                'uz' => 'Telefon raqam kiritilmagan',
-                'ru' => 'Введите номер телефона'
-            ]);
+            return self::errorResponse(__("mobile.auth.phone_not_entered"));
 
         // Check Length of phone
         $phone = phone_formatting($request->get('phone'));
 
         # check user exist or not
         $client = Client::where('phone', $phone)->get()->first();
-        if(!is_null($client) && !is_null($client->password))
+        if(is_null($client) || is_null($client->password))
         {
-            return self::successResponse(
-                [
-                    'is_new_user' => !is_null($client->password)
-                ],
-                [
-                    'uz' => "Parolni kiriting!",
-                    'ru' => "Введите пароль!"
-                ]
-            );
+            return $this->sendOTP($request, $phone, true);
         }
 
-        # check blocked or not
-        return $this->sendOTP($request, $phone, true);
+        # show user login
+        return self::successResponse(['is_new_user' => false], __("mobile.auth.enter_password"));
     }
 
     public function register(Request $request): array
     {
         if (!$request->has('phone'))
-            return self::errorResponse([
-                'uz' => 'Telefon raqam kiritilmagan',
-                'ru' => 'Введите номер телефона',
-            ]);
+            return self::errorResponse(__("mobile.auth.phone_not_entered"));
 
         if (!$request->has('sms_code') || ($request->has('sms_code') && strlen($request->get('sms_code')) == 0))
-            return self::errorResponse([
-                'uz' => 'Tasdiqlash kodi kiritilmagan',
-                'ru' => 'Заполните код подтверждения',
-            ]);
+            return self::errorResponse(__("mobile.auth.phone_not_entered"));
 
         $phone = phone_formatting($request->get('phone'));
         $otp = OTP::where('phone', $phone)->where('status',0)->first();
 
         if (is_null($otp))
-            return self::errorResponse([
-                'uz' => 'Sessiya topilmadi',
-                'ru' => 'Сессия не найден',
-            ]);
+            return self::errorResponse(__("mobile.auth.session_not_found"));
 
         if (strtotime($otp->expires_at) <  strtotime(Carbon::now()))
         {
             $otp->status = 3;
             $otp->save();
-            return self::errorResponse([
-                'uz' => 'SMS kodning amal qilish muddati tugagan',
-                'ru' => 'Срок действия SMS-кода истек',
-            ]);
+            return self::errorResponse(__("mobile.auth.sms_code_expired"));
         }
 
         $check = $otp->check($request->sms_code);
@@ -117,25 +94,16 @@ class AuthController extends ResponseController
                 'token_expires_at' => $token->token_expires_at,
             ]);
         }
-        return self::errorResponse([
-            'uz' => "Noto'g'ri kod kiritildi",
-            'ru' => 'Введен неправильный код',
-        ]);
+        return self::errorResponse(__("mobile.auth.wrong_code_entered"));
     }
 
     public function login(Request $request): array
     {
         if (!$request->has('phone'))
-            return self::errorResponse([
-                'uz' => 'Telefon raqam kiritilmagan',
-                'ru' => 'Введите номер телефона',
-            ]);
+            return self::errorResponse(__("mobile.auth.phone_not_entered"));
 
         if (!$request->has('password'))
-            return self::errorResponse([
-                'uz' => 'Parol kiritilmagan',
-                'ru' => 'Введите пароль',
-            ]);
+            return self::errorResponse(__("mobile.auth.password_not_entered"));
 
         $phone = phone_formatting($request->get('phone'));
         $client = Client::where('phone', $phone)->get()->first();
@@ -160,10 +128,7 @@ class AuthController extends ResponseController
             ]);
         }
         else {
-            return self::errorResponse([
-                'uz' => 'Login yoki parol noto\'g\'ri!',
-                'ru' => 'Логин или пароль неверный!',
-            ]);
+            return self::errorResponse(__("mobile.auth.login_or_password_incorrect"));
         }
 
     }
@@ -172,49 +137,31 @@ class AuthController extends ResponseController
     {
 
         if (!$request->has('password'))
-            return self::errorResponse([
-                'uz' => 'Parol kiritilmagan',
-                'ru' => 'Введите пароль',
-            ]);
+            return self::errorResponse(__("mobile.auth.password_not_entered"));
 
         $auth = accessToken()->auth();
         $client = Client::where('id', $auth->id)->get()->first();
 
         if ($client) {
-
             $client->password = Hash::make($request->password);
             $client->save();
-
-            return self::successResponse([],[
-                'uz' => 'Parol saqlandi!',
-                'ru' => 'Пароль сохранен!',
-            ]);
+            return self::successResponse([],__("mobile.auth.password_saved"));
         }
         else {
-            return self::errorResponse([
-                'uz' => 'Kutilmagan xatolik yuz berdi',
-                'ru' => 'Произошла непредвиденная ошибка',
-            ]);
+            return self::errorResponse(__("mobile.auth.unexpected_error"));
         }
     }
 
     public function logout(Request $request): array
     {
         accessToken()->forget($request->bearerToken());
-
-        return self::successResponse([],[
-            'uz' => 'Hisobdan chiqildi',
-            'ru' => 'Logged out',
-        ]);
+        return self::successResponse([],__("mobile.auth.logged_out"));
     }
 
     public function resetPasswordRequest(Request $request): array
     {
         if (!$request->has('phone'))
-            return self::errorResponse([
-                'uz' => 'Telefon raqam kiritilmagan',
-                'ru' => 'Введите номер телефона',
-            ]);
+            return self::errorResponse(__("mobile.auth.phone_not_entered"));
 
         // Check Length of phone
         $phone = phone_formatting($request->get('phone'));
@@ -223,10 +170,7 @@ class AuthController extends ResponseController
         $client = Client::where('phone', $phone)->get()->first();
         if(is_null($client))
         {
-            return self::errorResponse([
-                'uz' => "Telefon raqam topilmadi",
-                'ru' => "Номер телефона не найден",
-            ]);
+            return self::errorResponse(__("mobile.auth.phone_not_found"));
         }
 
         return $this->sendOTP($request, $phone);
@@ -242,27 +186,18 @@ class AuthController extends ResponseController
         # check blocked or not
         if (Cache::has('blocked-' . $request->phone)) {
             $wait = 60 - round((Carbon::now()->diffInSeconds(Cache::get('blocked-' . $request->phone))) / 60);
-            return self::errorResponse([
-                'uz' => "Telefon raqam bloklangan, kutish vaqti $wait minut",
-                'ru' => "Номер телефона заблокирован время ожиданий $wait минут ",
-            ]);
+            return self::errorResponse(str_replace("::minut::", $wait, __("mobile.auth.phone_number_blocked_for_minutes")));
         }
 
         # Check OTP count AND block user
         $count = OTP::get_count($request->phone);
         if ($count > 10000) {
             Cache::put("blocked-" . $request->phone, Carbon::now(), 3600);
-            return self::errorResponse([
-                'uz' => "Urunishlar ko'pligi sabab xavfsizlik yuzasidan sizning raqamingiz 1 soatga bloklandi",
-                'ru' => "Много попыток, в рамках безопасностью ваш номер заблокирован на 1 час",
-            ]);
+            return self::errorResponse(__("mobile.auth.too_many_request_block"));
         }
 
         if (12 < strlen($phone) || strlen($phone) < 9)
-            return self::errorResponse([
-                'uz' => "Kiritilgan telefon raqami noto'g'ri formatda",
-                'ru' => 'Номер телефона в неправильном формате',
-            ]);
+            return self::errorResponse(__("mobile.auth.phone_format_incorrect"));
 
         $last = 'last_resend_' . $phone; //
 
@@ -270,10 +205,7 @@ class AuthController extends ResponseController
             Cache::put($last, Carbon::now(), 1);
         else {
             $wait = 60 - Carbon::now()->diffInSeconds(Cache::get($last));
-            return self::errorResponse([
-                'uz' => "SMS kod jo'natilgan keyingi urunish $wait soniyadan keyin",
-                'ru' => "СМС код отправлена следующая попытка через $wait секунд",
-            ]);
+            return self::errorResponse(str_replace("::minut::", $wait, __("mobile.auth.sms_code_already_sent_error")));
         }
 
         # Send OTP and return session_id
@@ -281,15 +213,7 @@ class AuthController extends ResponseController
         if (!is_null($otp))
             $otp->canceled();
 
-        $session_id = OTP::send($phone, ($request->otp_length ?? 5));
-        return self::successResponse(
-            [
-                'is_new_user' => $status
-            ],
-            [
-                'uz' => "SMS kod yuborildi",
-                'ru' => "SMS-код успешно отправлен"
-            ]
-            );
+        $session_id = OTP::send($phone, ($request->otp_length ?? 4));
+        return self::successResponse(['is_new_user' => $status],__("mobile.auth.sms_code_sent"));
     }
 }

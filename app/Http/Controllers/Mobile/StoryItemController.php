@@ -11,15 +11,12 @@ class StoryItemController extends ResponseController
 {
     public function list(Request $request)
     {
-        $story_category_id = $request->story_category_id ?? null;
-        if(!$story_category_id)
-        {
-            return self::errorResponse([
-                'uz' => "story_category_id required",
-                'ru' => "story_category_id required",
-                'en' => "story_category_id required",
-            ]);
-        }
+        $v = $this->validate($request->all(),[
+            'story_category_id' => 'required'
+        ]);
+        if ($v !== true) return $v;
+
+        $story_category_id = $request->story_category_id;
 
         $items = StoryItem::query();
         $items = $items->where('story_category_id', $story_category_id);
@@ -29,15 +26,12 @@ class StoryItemController extends ResponseController
 
     public function view(Request $request)
     {
-        $story_item_id = $request->story_item_id ?? null;
-        if(!$story_item_id)
-        {
-            return self::errorResponse([
-                'uz' => "story_item_id required",
-                'ru' => "story_item_id required",
-                'en' => "story_item_id required",
-            ]);
-        }
+        $v = $this->validate($request->all(),[
+            'story_item_id' => 'required'
+        ]);
+        if ($v !== true) return $v;
+
+        $story_item_id = $request->story_item_id;
 
         //do all thing
 

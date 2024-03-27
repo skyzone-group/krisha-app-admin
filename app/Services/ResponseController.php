@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ResponseController
 {
-    public static function successResponse($data, $message = [])
+    public static function successResponse($data, $message = "")
     {
         return [
             'success' => true,
@@ -21,39 +21,28 @@ class ResponseController
     {
         return [
             'success' => false,
-            'message' => [
-                'uz' => $validation->errors()->first(),
-                'ru' => $validation->errors()->first(),
-            ],
+            'error_code' => -1,
+            'message' => $validation->errors()->first(),
             'data' => []
         ];
     }
 
-    public static function errorResponse($message = [], $data = [])
+    public static function errorResponse($message = "", $data = [])
     {
-        if (count($data))
-            return [
-                'success' => false,
-                'message' => $message,
-                'data' => $data
-            ];
-        else
-            return [
-                'success' => false,
-                'message' => $message,
-                'data' => []
-            ];
-
+        return [
+            'success' => false,
+            'error_code' => -1,
+            'message' => $message,
+            'data' => []
+        ];
     }
 
     public static function authFailed()
     {
         return [
             'success' => false,
-            'message' => [
-                'uz' => 'Avtorizatsiyada xatolik!',
-                'ru' => "Авторизация не удалась!",
-            ],
+            'error_code' => -1,
+            'message' => __("mobile.auth.authorization_error"),
             'data' => []
         ];
     }
@@ -62,10 +51,8 @@ class ResponseController
     {
         return [
             'success' => false,
-            'message' => [
-                'uz' => $method.' metodi topilmadi!',
-                'ru' => 'Метод '.$method.' не найден!',
-            ],
+            'error_code' => -1,
+            'message' => str_replace("::method::", $method, __("mobile.auth.authorization_error")),
             'data' => []
         ];
     }
@@ -77,17 +64,12 @@ class ResponseController
 
     public function validate(array $params, array $rules)
     {
-        // Set the desired languages for error messages
-        $languages = ['uz', 'ru'];
 
         $errors = [];
 
-        foreach ($languages as $lang) {
-            App::setLocale($lang);
-            $validator = Validator::make($params, $rules);
-            if ($validator->fails()) {
-                $errors[$lang] = $validator->errors()->first();
-            }
+        $validator = Validator::make($params, $rules);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->first();
         }
 
         if (!empty($errors)) {
