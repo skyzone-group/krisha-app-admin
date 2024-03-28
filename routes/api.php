@@ -29,6 +29,7 @@ Route::middleware("localization")->group(function () {
     Route::post('/mobile/v1/user/sign/reset-password-request',[AuthController::class,'resetPasswordRequest']);
     Route::post('/mobile/v1/user/sign/reset-password-confirm',[AuthController::class,'register']);
     Route::post('/mobile/v1/params/list',[ConstantsController::class,'list']);
+    Route::post('/mobile/v1/region/search',[ConstantsController::class,'search']);
 
     Route::post('/mobile/v1/keys/list',[KeyController::class,'list']);
 
