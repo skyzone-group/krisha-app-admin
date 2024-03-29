@@ -9,10 +9,6 @@ return [
             'short_name' => 'ru',
             'title' => 'русском',
         ],
-        'en' => [
-            'short_name' => 'en',
-            'title' => 'английском',
-        ],
     ],
     'panel' => [
         'token'         => '',

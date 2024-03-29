@@ -34,6 +34,14 @@
                         <form action="{{ route('regionUpdate', $item->id) }}" method="post">
                             @csrf
                             <div class="form-group">
+                                <label>@lang('cruds.region.fields.country_name_ru')</label>
+                                <select class="select2" name="country_id" style="width: 100%;">
+                                    @foreach($countries as $country)
+                                        <option {{ $item->country_id == $country->id ? 'selected' : ''}} value="{{ $country->id }}">{{ $country->name_ru }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <div class="row">
                                     @foreach(config('constants.locales') as $locale)
                                         <div class="col-6 mb-2">

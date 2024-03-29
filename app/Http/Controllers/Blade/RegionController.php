@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Blade;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\District;
 use App\Models\Quarter;
 use App\Models\Region;
@@ -21,7 +22,8 @@ class RegionController extends Controller
     public function add()
     {
         abort_if_forbidden('region.add');
-        return view('pages.region.add');
+        $countries = Country::all();
+        return view('pages.region.add', compact('countries'));
     }
 
     //create permission
@@ -37,7 +39,8 @@ class RegionController extends Controller
     {
         abort_if_forbidden('region.edit');
         $item = Region::where('id','=', $id)->get()->first();
-        return view('pages.region.edit',compact('item'));
+        $countries = Country::all();
+        return view('pages.region.edit',compact('item', 'countries'));
     }
 
     // update data

@@ -35,12 +35,12 @@ class ConstantsController extends ResponseController
 
         if (is_null($keyword))
         {
-            $regions = Region::get();
+            $regions = Region::with('country')->get();
             $districts = District::with('region')->get();
             $quarters = Quarter::with('district')->get();
         }
         else {
-            $regions = Region::where('name_' . $lang, 'like', '%' . $keyword . '%')->get();
+            $regions = Region::where('name_' . $lang, 'like', '%' . $keyword . '%')->with('country')->get();
             $districts = District::where('name_' . $lang, 'like', '%' . $keyword . '%')->with('region')->get();
             $quarters = Quarter::where('name_' . $lang, 'like', '%' . $keyword . '%')->with('district')->get();
         }
@@ -51,7 +51,7 @@ class ConstantsController extends ResponseController
                 $data[] = [
                     'id' => $region->id,
                     'title' => $region->{'name_' . $lang},
-                    'subtitle' => '',
+                    'subtitle' => $region->country->{'name_' . $lang},
                     'type' => 'region'
                 ];
             }

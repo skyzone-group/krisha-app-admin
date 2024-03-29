@@ -76,6 +76,7 @@ return [
         'fields'         => [
             'id'            => 'ID',
             'name'          => 'Название',
+            'country_name_ru' => 'Название страны',
         ],
     ],
     'district'           => [
