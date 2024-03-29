@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
+            $table->integer('country_id');
             $table->string('name_uz')->nullable();
             $table->string('name_ru')->nullable();
-            $table->string('name_en')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

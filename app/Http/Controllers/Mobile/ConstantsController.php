@@ -22,23 +22,31 @@ class ConstantsController extends ResponseController
 
     public function search(Request $request)
     {
-        $v = $this->validate($request->all(),[
-            'keyword' => 'required'
-        ]);
-        if ($v !== true) return $v;
+//        $v = $this->validate($request->all(),[
+//            'keyword' => 'required'
+//        ]);
+//        if ($v !== true) return $v;
 
         $lang = app()->getLocale();
-        $keyword = $request->keyword;
+        $keyword = $request->keyword ?? null;
         $id = $request->id ?? null;
         $type = $request->type ?? null;
 
 
-        $regions = Region::where('name_' . $lang, 'like', '%' . $keyword . '%')->get();
-        $districts = District::where('name_' . $lang, 'like', '%' . $keyword . '%')->with('region')->get();
-        $quarters = Quarter::where('name_' . $lang, 'like', '%' . $keyword . '%')->with('district')->get();
+        if (is_null($keyword))
+        {
+            $regions = Region::get();
+            $districts = District::with('region')->get();
+            $quarters = Quarter::with('district')->get();
+        }
+        else {
+            $regions = Region::where('name_' . $lang, 'like', '%' . $keyword . '%')->get();
+            $districts = District::where('name_' . $lang, 'like', '%' . $keyword . '%')->with('region')->get();
+            $quarters = Quarter::where('name_' . $lang, 'like', '%' . $keyword . '%')->with('district')->get();
+        }
 
         $data = [];
-        if ($type == 'region' || $type == null) {
+        if ($type == null) {
             foreach ($regions as $region) {
                 $data[] = [
                     'id' => $region->id,
@@ -49,7 +57,7 @@ class ConstantsController extends ResponseController
             }
         }
 
-        if ($type == 'district' || $type == null) {
+        if ($type == 'region' || ($type == null && !is_null($keyword))) {
             foreach ($districts as $district) {
                 if (is_null($id)) {
                     $data[] = [
@@ -69,7 +77,7 @@ class ConstantsController extends ResponseController
             }
         }
 
-        if ($type == 'quarter' || $type == null) {
+        if ($type == 'district') {
             foreach ($quarters as $quarter) {
                 if (is_null($id)) {
                     $data[] = [

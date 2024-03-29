@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('undergrounds', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name_uz')->nullable();
             $table->string('name_ru')->nullable();
-            $table->string('latitude', 50)->nullable();
-            $table->string('longitude', 50)->nullable();
-            $table->integer('region_id')->default(0);
-            $table->integer('district_id')->default(0);
-            $table->integer('quarter_id')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('undergrounds');
+        Schema::dropIfExists('countries');
     }
 };
