@@ -45,7 +45,6 @@ return new class extends Migration
             $table->string('video', 50)->nullable();
             $table->integer('ceiling_height')->default(0);
             $table->integer('bathroom_count')->default(0);
-            $table->boolean('is_home_number_hidden')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
