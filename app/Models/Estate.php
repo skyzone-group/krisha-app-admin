@@ -71,4 +71,9 @@ class Estate extends Model
     {
         return $this->hasMany(KeyItemValue::class,'estate_id','id');
     }
+
+    public function user()
+    {
+        return $this->BelongsTo(Client::class,'user_id','id');
+    }
 }

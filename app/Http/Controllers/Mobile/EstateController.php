@@ -70,6 +70,7 @@ class EstateController extends ResponseController
                         'district',
                         'quarter',
                         'underground',
+                        'user',
                     ]);
 
         $total = $query->count();

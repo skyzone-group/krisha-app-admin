@@ -9,4 +9,5 @@ class Client extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $hidden = ['deleted_at','password'];
 }
