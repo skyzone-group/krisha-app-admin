@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('avatar')->nullable();
             $table->string('password')->nullable();
-            $table->string('type')->nullable();
-            $table->boolean('verified')->default(false);
+            $table->string('type')->default('user');
             $table->softDeletes();
             $table->timestamps();
         });

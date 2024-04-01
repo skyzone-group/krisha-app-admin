@@ -25,25 +25,25 @@ return new class extends Migration
             $table->string('longitude', 50)->nullable();
             $table->boolean('is_owner')->default(false);//object_from_owner
             $table->boolean('is_new')->default(false);//новостройки или вторичка
-            $table->integer('home_number')->default(0);
+            $table->string('home_number')->nullable();
             $table->integer('room_count')->default(0);
             $table->integer('floor')->default(0);
             $table->integer('floor_count')->default(0);
-            $table->integer('total_area')->default(0);
-            $table->integer('kitchen_area')->default(0);
-            $table->integer('land_area')->default(0);//Площадь участка (соток)
-            $table->integer('land_area_type')->default(0);//(соток) or gektar
+            $table->double('total_area', 15, 4)->default(0); // Specify precision and scale
+            $table->double('kitchen_area', 15, 4)->default(0); // Specify precision and scale
+            $table->double('land_area', 15, 4)->default(0); // Specify precision and scale
+            $table->string('land_area_type')->nullable(); // (ar) or hectare
             $table->text('comment')->nullable();
-            $table->integer('build_year')->default(0);
+            $table->string('build_year')->nullable();
             $table->string('currency')->default('usd');
-            $table->integer('price')->default(0);
-            $table->string('price_type')->default('all');////mkv or all | default all
+            $table->double('price', 15, 8)->default(0);//Specify precision and scale
+            $table->string('price_type')->default('all'); // mkv or all | default all
             $table->string('transaction_type');//buy, rent, sell
             $table->boolean('is_barter')->default(false);//новостройки или вторичка
             $table->boolean('is_negotiable')->default(false);//kelishsa bo'ladimi
-            $table->boolean('is_home_number_hidden')->default(false);//
+            $table->boolean('is_home_number_hidden')->default(false);
             $table->string('video', 50)->nullable();
-            $table->integer('ceiling_height')->default(0);
+            $table->double('ceiling_height', 15, 4)->default(0); // Specify precision and scale
             $table->integer('bathroom_count')->default(0);
             $table->softDeletes();
             $table->timestamps();
