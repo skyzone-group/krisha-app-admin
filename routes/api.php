@@ -11,6 +11,7 @@ use App\Http\Controllers\Mobile\StoryCategoryController;
 use App\Http\Controllers\Mobile\StoryItemController;
 use App\Http\Controllers\Mobile\FileController;
 use App\Http\Controllers\Mobile\EstateController;
+use App\Http\Controllers\Mobile\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,6 +58,9 @@ Route::middleware("localization")->group(function () {
 
     //    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
     //    Route::post('/logout',[ApiAuthController::class,'logout']);
+
+        # Notification
+        Route::post('/mobile/v1/notification/list',[NotificationController::class,'list']);
     });
 });
 
