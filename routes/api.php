@@ -12,6 +12,7 @@ use App\Http\Controllers\Mobile\StoryItemController;
 use App\Http\Controllers\Mobile\FileController;
 use App\Http\Controllers\Mobile\EstateController;
 use App\Http\Controllers\Mobile\NotificationController;
+use App\Http\Controllers\Mobile\FavoriteController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -56,11 +57,18 @@ Route::middleware("localization")->group(function () {
         Route::post('/mobile/v1/estate/delete',[EstateController::class,'delete']);
         Route::post('/mobile/v1/estate/view',[EstateController::class,'view']);
 
-    //    Route::post('/tokens',[ApiAuthController::class,'getAllTokens']);
-    //    Route::post('/logout',[ApiAuthController::class,'logout']);
 
         # Notification
         Route::post('/mobile/v1/notification/list',[NotificationController::class,'list']);
+
+        # Favorite (estates)
+        Route::post('/mobile/v1/favorite/list',[FavoriteController::class,'list']);
+        Route::post('/mobile/v1/favorite/create',[FavoriteController::class,'create']);
+        Route::post('/mobile/v1/favorite/update',[FavoriteController::class,'update']);
+        Route::post('/mobile/v1/favorite/delete',[FavoriteController::class,'delete']);
+
+//        Route::post('/mobile/v1/favorite/update',[FavoriteController::class,'update']);
+//        Route::post('/mobile/v1/favorite/delete',[FavoriteController::class,'delete']);
     });
 });
 
