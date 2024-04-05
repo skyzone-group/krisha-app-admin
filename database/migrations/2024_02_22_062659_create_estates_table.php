@@ -13,6 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
+
         Schema::create('estates', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
@@ -45,6 +46,21 @@ return new class extends Migration
             $table->string('video', 50)->nullable();
             $table->double('ceiling_height', 15, 4)->default(0); // Specify precision and scale
             $table->integer('bathroom_count')->default(0);
+            $table->string('landmark')->nullable(); //ориентир
+            $table->boolean('is_pledged')->default(false); //в залоге
+            $table->boolean('is_dormitory')->default(false); //Бывшее общежитие
+            $table->boolean('is_kitchen_studio')->default(false); //Кухня студия
+            $table->boolean('has_basement')->default(false); //Есть цокольный этаж
+            $table->boolean('has_attic')->default(false); //Есть мансарда
+            $table->boolean('has_fence')->default(false); //Есть забор
+            $table->boolean('has_tenants')->default(false); //Есть арендаторы
+            $table->boolean('documents_in_order')->default(false); //Документы в порядке
+            $table->boolean('house_and_land_pledged')->default(false); //Дом и дача в залоге
+            $table->boolean('three_phase_power')->default(false); //подведено 3 фазы
+            $table->boolean('free_layout')->default(false); //Свободная планировка
+            $table->string('roof_cover')->nullable(); //Покрытие крыши
+            $table->string('how_fenced_plot')->nullable(); //Как огорожен участок
+            $table->string('dedicated_power', 50)->nullable(); //Выделенная мощность, квт
             $table->softDeletes();
             $table->timestamps();
         });
