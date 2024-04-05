@@ -45,7 +45,24 @@ class EstateController extends ResponseController
             'kitchen_area_to',
             'build_year_to',
             'ceiling_height_to',
-            'land_area_to'
+            'land_area_to',
+
+            'landmark',
+            'is_pledged',
+            'is_dormitory',
+            'is_kitchen_studio',
+            'has_basement',
+            'has_attic',
+            'has_fence',
+            'has_tenants',
+            'documents_in_order',
+            'house_and_land_pledged',
+            'three_phase_power',
+            'free_layout',
+            'roof_cover',
+            'how_fenced_plot',
+            'dedicated_power',
+            'status',
         ];
 
         // Loop through the searchable fields and apply filters if they exist in the request

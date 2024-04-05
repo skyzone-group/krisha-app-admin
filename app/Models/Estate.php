@@ -41,6 +41,23 @@ class Estate extends Model
 
         'price_type',
         'is_home_number_hidden',
+
+        'landmark',
+        'is_pledged',
+        'is_dormitory',
+        'is_kitchen_studio',
+        'has_basement',
+        'has_attic',
+        'has_fence',
+        'has_tenants',
+        'documents_in_order',
+        'house_and_land_pledged',
+        'three_phase_power',
+        'free_layout',
+        'roof_cover',
+        'how_fenced_plot',
+        'dedicated_power',
+        'status',
     ];
 
     public function images()

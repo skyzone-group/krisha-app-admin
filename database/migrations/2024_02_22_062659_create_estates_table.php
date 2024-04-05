@@ -61,6 +61,7 @@ return new class extends Migration
             $table->string('roof_cover')->nullable(); //Покрытие крыши
             $table->string('how_fenced_plot')->nullable(); //Как огорожен участок
             $table->string('dedicated_power', 50)->nullable(); //Выделенная мощность, квт
+            $table->string('status')->default('pending'); // active, pending, sold, deleted
             $table->softDeletes();
             $table->timestamps();
         });
