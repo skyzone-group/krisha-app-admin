@@ -46,7 +46,14 @@
                                     @endforeach
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-6 mb-2">
+                                        <label>@lang('cruds.item.fields.key')</label>
+                                        <input type="text" name="key" class="form-control {{ $errors->has("key") ? "is-invalid":"" }}" value="{{ old('key') }}" required>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success float-right">@lang('global.save')</button>

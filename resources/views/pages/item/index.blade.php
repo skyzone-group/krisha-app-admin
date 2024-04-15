@@ -40,6 +40,7 @@
                             <tr>
                                 <th>@lang('cruds.item.fields.id')</th>
                                 <th>@lang('cruds.item.fields.name')</th>
+                                <th>@lang('cruds.item.fields.key')</th>
                                 <th class="w-25">@lang('global.actions')</th>
                             </tr>
                             </thead>
@@ -48,6 +49,7 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name_ru }}</td>
+                                    <td>{{ $item->key ?? '-' }}</td>
                                     <td class="text-center">
                                         @can('item.delete')
                                             <form action="{{ route('itemDestroy',$item->id) }}" method="post">

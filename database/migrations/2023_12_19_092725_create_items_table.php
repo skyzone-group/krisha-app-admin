@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_uz')->nullable();
             $table->string('name_ru')->nullable();
-            $table->string('name_en')->nullable();
+            $table->string('key')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
