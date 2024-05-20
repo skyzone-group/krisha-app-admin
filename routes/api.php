@@ -13,6 +13,7 @@ use App\Http\Controllers\Mobile\FileController;
 use App\Http\Controllers\Mobile\EstateController;
 use App\Http\Controllers\Mobile\NotificationController;
 use App\Http\Controllers\Mobile\FavoriteController;
+use App\Http\Controllers\Mobile\SpecialTagController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,6 +44,9 @@ Route::middleware("localization")->group(function () {
     # File
     Route::post('/mobile/v1/file/upload',[FileController::class,'upload']);
 
+    # SpecialTags
+    Route::post('/mobile/v1/special-tags/list',[SpecialTagController::class,'list']);
+
 
     Route::group(['middleware' => 'api-auth'],function (){
         Route::post('/mobile/v1/user/sign/set-password',[AuthController::class,'setPassword']);
@@ -66,6 +70,8 @@ Route::middleware("localization")->group(function () {
         Route::post('/mobile/v1/favorite/create',[FavoriteController::class,'create']);
         Route::post('/mobile/v1/favorite/update',[FavoriteController::class,'update']);
         Route::post('/mobile/v1/favorite/delete',[FavoriteController::class,'delete']);
+
+
 
 //        Route::post('/mobile/v1/favorite/update',[FavoriteController::class,'update']);
 //        Route::post('/mobile/v1/favorite/delete',[FavoriteController::class,'delete']);
