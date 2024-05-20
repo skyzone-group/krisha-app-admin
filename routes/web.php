@@ -14,6 +14,8 @@ use App\Http\Controllers\Blade\KeyController;
 use App\Http\Controllers\Blade\StoryCategoryController;
 use App\Http\Controllers\Blade\StoryItemController;
 use App\Http\Controllers\Blade\DeveloperController;
+use App\Http\Controllers\Blade\SpecialTagController;
+
 /*
 |--------------------------------------------------------------------------
 | Blade (front-end) Routes
@@ -139,6 +141,14 @@ Route::group(['middleware' => 'auth'],function (){
     Route::get('/admin/developer/{developer_id}/edit',[DeveloperController::class,'edit'])->name('developerEdit');
     Route::post('/admin/developer/update/{developer_id}',[DeveloperController::class,'update'])->name('developerUpdate');
     Route::delete('/admin/developer/delete/{id}',[DeveloperController::class,'destroy'])->name('developerDestroy');
+
+    # SpecialTag
+    Route::get('/admin/special-tags',[SpecialTagController::class,'index'])->name('special-tagIndex');
+    Route::get('/admin/special-tag/add',[SpecialTagController::class,'add'])->name('special-tagAdd');
+    Route::post('/admin/special-tag/create',[SpecialTagController::class,'create'])->name('special-tagCreate');
+    Route::get('/admin/special-tag/{special_tag_id}/edit',[SpecialTagController::class,'edit'])->name('special-tagEdit');
+    Route::post('/admin/special-tag/update/{special_tag_id}',[SpecialTagController::class,'update'])->name('special-tagUpdate');
+    Route::delete('/admin/special-tag/delete/{id}',[SpecialTagController::class,'destroy'])->name('special-tagDestroy');
 });
 
 // Change language session condition

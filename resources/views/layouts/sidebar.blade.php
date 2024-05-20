@@ -59,7 +59,7 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview ">
             <a href="" class="nav-link {{ (Request::is('*region*') || Request::is('*district*') || Request::is('*quarter*')) ? "active":'' }}">
-                <i class="fas fa-map-marker"></i>
+                <i class="fas fa-angle-right"></i>
                 <p>
                     @lang('global.places')
                     <i class="right fas fa-angle-left"></i>
@@ -91,7 +91,7 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview ">
             <a href="" class="nav-link {{ (Request::is('*/item*')) ? "active":'' }}">
-                <i class="fas fa-map-marker"></i>
+                <i class="fas fa-angle-right"></i>
                 <p>
                     @lang('global.items')
                     <i class="right fas fa-angle-left"></i>
@@ -118,7 +118,7 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview ">
             <a href="" class="nav-link {{ (Request::is('*story-categor*') || Request::is('*story-item*')) ? "active":'' }}">
-                <i class="fas fa-map-marker"></i>
+                <i class="fas fa-angle-right"></i>
                 <p>
                     @lang('cruds.story.title')
                     <i class="right fas fa-angle-left"></i>
@@ -137,20 +137,22 @@
                         <p> @lang('cruds.story-item.title')</p>
                     </a>
                 </li>
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('keyIndex') }}" class="nav-link {{ Request::is('*key*') ? "active":'' }}">--}}
-{{--                        <i class="fas fa-angle-right"></i>--}}
-{{--                        <p> @lang('cruds.key.title')</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
             </ul>
         </li>
+
+        <li class="nav-item">
+            <a href="{{ route('special-tagIndex') }}" class="nav-link {{ (Request::is('*special-tag*')) ? "active":'' }}">
+                <i class="fas fa-angle-right"></i>
+                <p> @lang('cruds.special-tag.title')</p>
+            </a>
+        </li>
+
     </ul>
 
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview ">
             <a href="" class="nav-link {{ (Request::is('*/developer*')) ? "active":'' }}">
-                <i class="fas fa-map-marker"></i>
+                <i class="fas fa-angle-right"></i>
                 <p>
                     @lang('cruds.sidebar-jk.title')
                     <i class="right fas fa-angle-left"></i>

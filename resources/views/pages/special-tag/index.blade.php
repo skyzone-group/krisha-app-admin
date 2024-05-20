@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>@lang('cruds.story-item.title')</h1>
+                    <h1>@lang('cruds.special-tag.title')</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('global.home')</a></li>
-                        <li class="breadcrumb-item active">@lang('cruds.story-item.title')</li>
+                        <li class="breadcrumb-item active">@lang('cruds.special-tag.title')</li>
                     </ol>
                 </div>
             </div>
@@ -24,9 +24,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">@lang('cruds.story-item.title_singular')</h3>
-                        @can('story-item.add')
-                            <a href="{{ route('story-itemAdd') }}" class="btn btn-success btn-sm float-right">
+                        <h3 class="card-title">@lang('cruds.special-tag.title_singular')</h3>
+                        @can('special-tag.add')
+                            <a href="{{ route('special-tagAdd') }}" class="btn btn-success btn-sm float-right">
                                 <span class="fas fa-plus-circle"></span>
                                 @lang('global.add')
                             </a>
@@ -35,13 +35,14 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <!-- Data table -->
-                        <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline table-responsive-lg" role="grid" aria-describedby="dataTable_info">
+                        <table id="dataTable" class="table dt-responsive  w-100">
+
                             <thead>
                             <tr>
-                                <th>@lang('cruds.story-item.fields.id')</th>
-                                <th>@lang('cruds.story-item.fields.story_category_id')</th>
-                                <th>@lang('cruds.story-item.fields.title')</th>
-                                <th>@lang('cruds.story-item.fields.file')</th>
+                                <th>@lang('cruds.special-tag.fields.id')</th>
+                                <th>@lang('cruds.special-tag.fields.icon')</th>
+                                <th>@lang('cruds.special-tag.fields.name')</th>
+                                <th>@lang('cruds.special-tag.fields.color')</th>
                                 <th class="w-25">@lang('global.actions')</th>
                             </tr>
                             </thead>
@@ -49,22 +50,20 @@
                             @foreach($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>{{ $item->story_category->title_uz ?? 'DELETED' }}</td>
-                                    <td>{{ $item->title_ru }}</td>
+                                    <td>{{ $item->icon }}</td>
+                                    <td>{{ $item->name_ru }}</td>
                                     <td>
-                                        @if($item->file)
-                                            <a target="_blank" href="{{ config('constants.panel.file_url').$item->file }}">{{$item->file}}</a>
-                                        @else
+                                        <span style="background-color: {{ $item->color }}; color: {{ $item->color }}; display: block; width: 100%; height: 100%;">
                                             -
-                                        @endif
+                                        </span>
                                     </td>
                                     <td class="text-center">
-                                        @can('story-item.delete')
-                                            <form action="{{ route('story-itemDestroy',$item->id) }}" method="post">
+                                        @can('special-tag.delete')
+                                            <form action="{{ route('special-tagDestroy',$item->id) }}" method="post">
                                                 @csrf
                                                 <div class="btn-group">
-                                                    @can('story-item.edit')
-                                                        <a href="{{ route('story-itemEdit',$item->id) }}" type="button" class="btn btn-info btn-sm"> @lang('global.edit')</a>
+                                                    @can('special-tag.edit')
+                                                        <a href="{{ route('special-tagEdit',$item->id) }}" type="button" class="btn btn-info btn-sm"> @lang('global.edit')</a>
                                                     @endcan
                                                     <input name="_method" type="hidden" value="DELETE">
                                                     <button type="button" class="btn btn-danger btn-sm" onclick="if (confirm('Вы уверены?')) {this.form.submit()}"> @lang('global.delete')</button>

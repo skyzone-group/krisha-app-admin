@@ -171,5 +171,17 @@ return [
             'name'          => 'Название',
         ],
     ],
+    'special-tag'          => [
+        'title'          => 'Special Tags',
+        'title_singular' => 'Special Tag',
+        'fields'         => [
+            'id'            => 'ID',
+            'name'          => 'Название',
+            'color'         => 'Цвет',
+            'icon'          => 'Иконка',
+            'description'   => 'Описание',
+            'category_type' => 'Тип категории',
+        ],
+    ],
 
 ];
