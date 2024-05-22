@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\Controller;
 use App\Models\StoryItem;
+use App\Models\ViewedStory;
 use App\Services\ResponseController;
 use Illuminate\Http\Request;
 
@@ -60,8 +61,14 @@ class StoryItemController extends ResponseController
         if ($v !== true) return $v;
 
         $story_item_id = $request->story_item_id;
-
+        $user = accessToken()->getMe();
+        $user_id = $user->id;
         //do all thing
+
+        $res = ViewedStory::create([
+            'story_item_id' => $story_item_id,
+            'user_id' => $user_id
+        ]);
 
         return self::successResponse([],"viewed");
     }

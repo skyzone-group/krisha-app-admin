@@ -36,11 +36,6 @@ Route::middleware("localization")->group(function () {
 
     Route::post('/mobile/v1/keys/list',[KeyController::class,'list']);
 
-    #Stories
-    Route::post('/mobile/v1/story/category/list',[StoryCategoryController::class,'list']);
-    Route::post('/mobile/v1/story/item/list',[StoryItemController::class,'list']);
-    Route::post('/mobile/v1/story/item/view',[StoryItemController::class,'view']);
-
     # File
     Route::post('/mobile/v1/file/upload',[FileController::class,'upload']);
 
@@ -71,6 +66,10 @@ Route::middleware("localization")->group(function () {
         Route::post('/mobile/v1/favorite/update',[FavoriteController::class,'update']);
         Route::post('/mobile/v1/favorite/delete',[FavoriteController::class,'delete']);
 
+        #Stories
+        Route::post('/mobile/v1/story/category/list',[StoryCategoryController::class,'list']);
+        Route::post('/mobile/v1/story/item/list',[StoryItemController::class,'list']);
+        Route::post('/mobile/v1/story/item/view',[StoryItemController::class,'view']);
 
 
 //        Route::post('/mobile/v1/favorite/update',[FavoriteController::class,'update']);
