@@ -18,12 +18,15 @@ class StoryItemController extends ResponseController
         ]);
         if ($v !== true) return $v;
 
+        $user = accessToken()->getMe();
+        $user_id = $user->id;
         $story_category_id = $request->story_category_id;
 
         $items = StoryItem::query();
-        $items = $items->where('story_category_id', $story_category_id);
+        $items = $items->where('story_category_id', $story_category_id)->with('views', function($q) use ($user_id){
+            $q->where('user_id', $user_id);
+        });
         $items = $items->get();
-
         $data = [];
         foreach ($items as $item) {
             $action_type = 'none';
@@ -41,6 +44,7 @@ class StoryItemController extends ResponseController
                 'id' => $item->id,
                 'type' => in_array(strtoupper($item->file_type), ['MP4', 'MOV', 'AVI']) ? 'video' : 'image',
                 'source' => $item->file,
+                'viewed' => (bool)$item->views,
                 'action' => $action_type == 'none' ? null : [
                     'title' => $item->{'title_' . $lang},
                     'subtitle' => $item->{'subtitle_' . $lang},

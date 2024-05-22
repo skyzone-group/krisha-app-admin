@@ -35,4 +35,8 @@ class StoryItem extends Model
     public function story_category(){
         return $this->belongsTo(StoryCategory::class);
     }
+
+    public function views(){
+        return $this->hasOne(ViewedStory::class, 'story_item_id', 'id');
+    }
 }
